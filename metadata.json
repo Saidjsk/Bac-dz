@@ -1,0 +1,5 @@
+{
+  "name": "Baccalaureate Prep Dashboard",
+  "description": "A student dashboard for Baccalaureate preparation, featuring a countdown timer, subject categories, and navigation tools. The user interface is in Arabic and designed for mobile.",
+  "requestFramePermissions": []
+}
