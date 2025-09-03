@@ -41,7 +41,7 @@ const Countdown: React.FC = () => {
     ];
 
     return (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-1 mx-4 mt-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-1 mx-4 mt-6 border border-gray-100 dark:border-gray-700/50">
             <div className="bg-blue-600 text-white rounded-lg p-3 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                     <ClockIcon className="w-5 h-5" />
@@ -49,9 +49,9 @@ const Countdown: React.FC = () => {
                 </div>
                 <span className="text-sm font-semibold">15 جوان 2025</span>
             </div>
-            <div className="grid grid-cols-4 gap-2 text-center py-4">
+            <div className="flex flex-row-reverse text-center py-4 divide-x-2 divide-gray-100 dark:divide-gray-700/50">
                 {timeUnits.map((unit) => (
-                    <div key={unit.label}>
+                    <div key={unit.label} className="flex-1 px-1">
                         <p className="text-4xl font-bold text-gray-800 dark:text-gray-200 tracking-tighter">{String(unit.value).padStart(2, '0')}</p>
                         <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">{unit.label}</p>
                     </div>

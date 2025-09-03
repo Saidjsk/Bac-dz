@@ -4,32 +4,48 @@ import Countdown from './components/Countdown';
 import SubjectCard from './components/SubjectCard';
 import BottomNav from './components/BottomNav';
 import SubjectDetailPage from './components/SubjectDetailPage';
+import StudyBuddy from './components/StudyBuddy';
+import Sidebar from './components/Sidebar';
+import GradeCalculator from './components/GradeCalculator';
+import TipsPage from './components/TipsPage';
+import DailyGoal from './components/DailyGoal';
+import StudyPlanGenerator from './components/StudyPlanGenerator';
+import QuizHub from './components/QuizHub';
+import AdBanner from './components/AdBanner';
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon, 
-    BarChartIcon, 
-    CompassIcon, 
     GlobeIcon,
     PencilIcon,
     BookmarkIcon,
     HomeIcon,
     BookOpenIcon,
     QuestionMarkCircleIcon,
-    LightBulbIcon
+    LightBulbIcon,
+    GridIcon,
+    ScaleIcon,
+    BarChartIcon,
+    CompassIcon,
+    GraduationCapIcon,
+    CalendarIcon
 } from './components/icons';
 
 const subjects: Subject[] = [
-    { name: 'المحاسبة', icon: <CalculatorIcon className="w-5 h-5 text-white" />, color: 'bg-green-500' },
-    { name: 'الإقتصاد', icon: <BarChartIcon className="w-5 h-5 text-white" />, color: 'bg-blue-500' },
-    { name: 'الرياضيات', icon: <CompassIcon className="w-5 h-5 text-white" />, color: 'bg-red-500' },
-    { name: 'التاريخ والجغرافيا', icon: <GlobeIcon className="w-5 h-5 text-white" />, color: 'bg-orange-500' },
-    { name: 'الفلسفة', icon: <PencilIcon className="w-5 h-5 text-white" />, color: 'bg-indigo-500' },
-    { name: 'العلوم الإسلامية', icon: <BookmarkIcon className="w-5 h-5 text-white" />, color: 'bg-pink-500' }
+    { name: 'الرياضيات', icon: <CalculatorIcon />, color: 'bg-gradient-to-br from-red-500 to-rose-500' },
+    { name: 'التاريخ والجغرافيا', icon: <CompassIcon />, color: 'bg-gradient-to-br from-orange-400 to-amber-500' },
+    { name: 'الإقتصاد', icon: <BarChartIcon />, color: 'bg-gradient-to-br from-green-400 to-emerald-500' },
+    { name: 'اللغة العربية', icon: <PencilIcon />, color: 'bg-gradient-to-br from-blue-500 to-sky-500' },
+    { name: 'اللغة الفرنسية', icon: <BookmarkIcon />, color: 'bg-gradient-to-br from-pink-400 to-fuchsia-500' },
+    { name: 'اللغة الأمازيغية', icon: <GridIcon />, color: 'bg-gradient-to-br from-purple-500 to-violet-600' },
+    { name: 'اللغة الإنجليزية', icon: <GlobeIcon />, color: 'bg-gradient-to-br from-cyan-400 to-teal-500' },
+    { name: 'العلوم الإسلامية', icon: <BookOpenIcon />, color: 'bg-gradient-to-br from-teal-400 to-cyan-500' },
+    { name: 'الفلسفة', icon: <LightBulbIcon />, color: 'bg-gradient-to-br from-indigo-500 to-violet-500' },
+    { name: 'القانون', icon: <ScaleIcon />, color: 'bg-gradient-to-br from-yellow-400 to-lime-500' },
 ];
 
 const navItems: NavItem[] = [
     { name: 'الرئيسية', icon: <HomeIcon /> },
-    { name: 'التمارين', icon: <BookOpenIcon /> },
+    { name: 'الخطة', icon: <CalendarIcon /> },
     { name: 'الحاسبة', icon: <CalculatorIcon /> },
     { name: 'الاختبار', icon: <QuestionMarkCircleIcon /> },
     { name: 'نصائح', icon: <LightBulbIcon /> }
@@ -40,6 +56,7 @@ const App: React.FC = () => {
     const [activeNav, setActiveNav] = useState('الرئيسية');
     const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
     const [isViewingLesson, setIsViewingLesson] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
         if (typeof window !== 'undefined' && localStorage.getItem('theme')) {
             return localStorage.getItem('theme') as 'light' | 'dark';
@@ -59,6 +76,8 @@ const App: React.FC = () => {
             localStorage.setItem('theme', 'light');
         }
     }, [theme]);
+
+    const toggleSidebar = () => setIsSidebarOpen(p => !p);
 
     const handleThemeToggle = () => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -99,30 +118,78 @@ const App: React.FC = () => {
             window.removeEventListener('popstate', handlePopState);
         };
     }, []);
+    
+    const isHomePage = selectedSubject === null;
+
+    const renderPageContent = () => {
+        if (selectedSubject) {
+            return <SubjectDetailPage subject={selectedSubject} onViewLesson={setIsViewingLesson} />;
+        }
+
+        switch (activeNav) {
+            case 'الخطة':
+                return <StudyPlanGenerator />;
+            case 'الحاسبة':
+                return <GradeCalculator />;
+            case 'الاختبار':
+                return <QuizHub />;
+            case 'نصائح':
+                return <TipsPage />;
+            case 'الرئيسية':
+            default:
+                return (
+                    <>
+                        <Countdown />
+                        <DailyGoal />
+
+                        <div className="p-4">
+                            <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">المواد الدراسية</h2>
+                            <div className="grid grid-cols-2 gap-4">
+                                {subjects.map((subject) => (
+                                    <SubjectCard key={subject.name} subject={subject} onClick={() => handleSubjectSelect(subject)} />
+                                ))}
+                            </div>
+                        </div>
+
+                        <AdBanner
+                            data-ad-client="ca-pub-1234567890123456" 
+                            data-ad-slot="1234567890"
+                            className="my-4 mx-4"
+                        />
+
+                        <StudyBuddy mode="general" />
+                    </>
+                );
+        }
+    };
 
     return (
-        <div className="max-w-md mx-auto bg-gray-50 dark:bg-gray-900 min-h-screen font-sans flex flex-col shadow-2xl">
+        <div className="max-w-md mx-auto min-h-screen font-sans flex flex-col shadow-2xl">
+            <Sidebar 
+                isOpen={isSidebarOpen}
+                onClose={() => setIsSidebarOpen(false)}
+                subjects={subjects}
+                selectedSubject={selectedSubject}
+                onSubjectSelect={(subject) => {
+                    handleSubjectSelect(subject);
+                    setIsSidebarOpen(false);
+                }}
+                onHomeSelect={() => {
+                    handleBack();
+                    setIsSidebarOpen(false);
+                }}
+            />
             {!isViewingLesson && (
                 <Header 
-                    onMenuClick={selectedSubject ? handleBack : undefined} 
+                    onLeftButtonClick={isHomePage ? toggleSidebar : handleBack}
+                    isHomePage={isHomePage}
                     onThemeToggle={handleThemeToggle}
                     theme={theme}
                 />
             )}
             <main className={`flex-grow ${!isViewingLesson ? 'pb-20 overflow-y-auto' : ''}`}>
-                 <div key={selectedSubject ? selectedSubject.name : 'home'} className="fade-in h-full">
-                    {selectedSubject ? (
-                        <SubjectDetailPage subject={selectedSubject} onViewLesson={setIsViewingLesson} />
-                    ) : (
-                        <>
-                            <Countdown />
-                            <div className="p-4 grid grid-cols-2 gap-4">
-                                {subjects.map((subject) => (
-                                    <SubjectCard key={subject.name} subject={subject} onClick={() => handleSubjectSelect(subject)} />
-                                ))}
-                            </div>
-                        </>
-                    )}
+                 <div key={selectedSubject ? selectedSubject.name : activeNav} className="page h-full">
+                    {renderPageContent()}
                 </div>
             </main>
             {!isViewingLesson && (

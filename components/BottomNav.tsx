@@ -17,8 +17,9 @@ const BottomNav: React.FC<BottomNavProps> = ({ items, activeItem, onItemClick })
             <button
               key={item.name}
               onClick={() => onItemClick(item.name)}
-              className={`flex flex-col items-center justify-center gap-1 w-16 transition-colors duration-300 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400'}`}
+              className={`relative flex flex-col items-center justify-center gap-1 w-16 transition-colors duration-300 ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-gray-500 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400'}`}
             >
+              {isActive && <div className="absolute top-1 w-1.5 h-1.5 bg-blue-600 dark:bg-blue-400 rounded-full"></div>}
               {React.cloneElement(item.icon, { className: 'w-6 h-6' })}
               <span className="text-xs font-semibold">{item.name}</span>
             </button>
