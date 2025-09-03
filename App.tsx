@@ -12,6 +12,7 @@ import DailyGoal from './components/DailyGoal';
 import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
 import AdBanner from './components/AdBanner';
+import WelcomeModal from './components/WelcomeModal';
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon, 
@@ -165,6 +166,7 @@ const App: React.FC = () => {
 
     return (
         <div className="max-w-md mx-auto min-h-screen font-sans flex flex-col shadow-2xl">
+            <WelcomeModal />
             <Sidebar 
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
