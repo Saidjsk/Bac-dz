@@ -20,8 +20,8 @@ const AdBanner: React.FC = () => {
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}
-        data-ad-client="ca-pub-1234567890123456" // TODO: Replace with your client ID
-        data-ad-slot="1234567890" // TODO: Replace with your ad slot ID
+        data-ad-client="ca-pub-3808999482447804"
+        data-ad-slot="8034254298"
         data-ad-format="auto"
         data-full-width-responsive="true"
       ></ins>
