@@ -104,7 +104,7 @@ const StudyPlanGenerator: React.FC = () => {
         setError(null);
 
         try {
-            if (!process.env.API_KEY) throw new Error("API key not found.");
+            if (!process.env.API_KEY) throw new Error("API_KEY_MISSING");
 
             const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
@@ -147,7 +147,11 @@ const StudyPlanGenerator: React.FC = () => {
 
         } catch (e) {
             console.error("Error generating study plan:", e);
-            setError('عذرًا، حدث خطأ أثناء إنشاء الخطة. قد يكون هناك ضغط على الخدمة. يرجى المحاولة مرة أخرى.');
+            if (e instanceof Error && e.message === 'API_KEY_MISSING') {
+                setError('فشل إنشاء الخطة. لا يمكن الوصول إلى مفتاح API. تأكد من أن اسم المتغير هو `API_KEY` في إعدادات النشر الخاصة بك.');
+            } else {
+                setError('عذرًا، حدث خطأ أثناء إنشاء الخطة. قد يكون هناك ضغط على الخدمة. يرجى المحاولة مرة أخرى.');
+            }
         } finally {
             setIsLoading(false);
         }

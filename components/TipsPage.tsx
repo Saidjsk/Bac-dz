@@ -49,7 +49,7 @@ const TipsPage: React.FC = () => {
 
         try {
             if (!process.env.API_KEY) {
-                throw new Error("API key not found.");
+                throw new Error("API_KEY_MISSING");
             }
             const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             
@@ -88,7 +88,11 @@ const TipsPage: React.FC = () => {
             cachedTipsRef.current[category.key] = newTips;
         } catch (e) {
             console.error("Error fetching tips:", e);
-            setError('عذراً، حدث خطأ أثناء جلب النصائح. يرجى المحاولة مرة أخرى.');
+            if (e instanceof Error && e.message === 'API_KEY_MISSING') {
+                setError('فشل جلب النصائح. لا يمكن الوصول إلى مفتاح API. تأكد من أن اسم المتغير هو `API_KEY` في إعدادات النشر الخاصة بك.');
+            } else {
+                setError('عذراً، حدث خطأ أثناء جلب النصائح. يرجى المحاولة مرة أخرى.');
+            }
         } finally {
             setIsLoading(false);
         }
