@@ -16,10 +16,10 @@ const AdBanner: React.FC = () => {
   }, []);
 
   return (
-    <div className="my-4 text-center px-4">
+    <div className="my-4 px-4">
       <ins
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', width: '100%' }}
         data-ad-client="ca-pub-3808999482447804"
         data-ad-slot="8034254298"
         data-ad-format="auto"
