@@ -1,9 +1,8 @@
-import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Subject, Quiz } from '../types';
 import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon } from './icons';
 import Economics2013Lesson from './Economics2013Lesson';
 import EconomicsLessons from './EconomicsLessons';
-import StudyBuddy from './StudyBuddy';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
 
@@ -20,9 +19,7 @@ interface SubjectDetailPageProps {
 const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLesson }) => {
     const [activeTab, setActiveTab] = useState<'topics' | 'lessons' | 'quizzes'>('topics');
     const [viewingYear, setViewingYear] = useState<number | null>(null);
-    const [lessonContent, setLessonContent] = useState('');
     const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
-    const lessonRef = useRef<HTMLDivElement>(null);
     const years = [2013, 2014, 2015, 2016, 2017, 2018];
     const [progress, setProgress] = useState<ProgressData>({ viewedLessons: {}, completedQuizzes: {} });
 
@@ -120,14 +117,6 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         }
         return null;
     };
-    
-    useLayoutEffect(() => {
-        if (viewingYear !== null && lessonRef.current) {
-            setLessonContent(lessonRef.current.innerText);
-        } else {
-            setLessonContent('');
-        }
-    }, [viewingYear]);
 
     if (activeQuiz) {
         return (
@@ -151,11 +140,9 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                         <p className="text-gray-500 dark:text-gray-400">محتوى بكالوريا {viewingYear}</p>
                     </div>
                 </header>
-                <div className="flex-grow overflow-y-auto" ref={lessonRef}>
+                <div className="flex-grow overflow-y-auto">
                     {renderContent()}
                 </div>
-
-                {lessonContent && <StudyBuddy mode="subject" lessonContent={lessonContent} subjectName={subject.name} />}
             </div>
         );
     }

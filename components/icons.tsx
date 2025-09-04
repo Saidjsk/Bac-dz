@@ -112,12 +112,6 @@ export const CloseIcon: React.FC<IconProps> = ({ className }) => (
   </svg>
 );
 
-export const PaperAirplaneIcon: React.FC<IconProps> = ({ className }) => (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
-    </svg>
-);
-
 export const GridIcon: React.FC<IconProps> = ({ className }) => (
     <svg className={className} fill="currentColor" viewBox="0 0 20 20">
         <path d="M1 1h6v6H1V1zm2 2v2h2V3H3zm7-2h6v6h-6V1zm2 2v2h2V3h-2zM1 11h6v6H1v-6zm2 2v2h2v-2H3zm7-2h6v6h-6v-6zm2 2v2h2v-2h-2z" />

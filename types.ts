@@ -13,12 +13,6 @@ export interface NavItem {
   icon: React.ReactElement<{ className?: string }>;
 }
 
-// FIX: Add ChatMessage type definition for StudyBuddy component
-export interface ChatMessage {
-  role: 'user' | 'model';
-  parts: { text: string }[];
-}
-
 // Add Quiz type definition for the new Quizzes feature
 export interface QuizQuestion {
   id: string;

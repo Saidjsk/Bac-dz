@@ -4,7 +4,6 @@ import Countdown from './components/Countdown';
 import SubjectCard from './components/SubjectCard';
 import BottomNav from './components/BottomNav';
 import SubjectDetailPage from './components/SubjectDetailPage';
-import StudyBuddy from './components/StudyBuddy';
 import Sidebar from './components/Sidebar';
 import GradeCalculator from './components/GradeCalculator';
 import TipsPage from './components/TipsPage';
@@ -157,8 +156,6 @@ const App: React.FC = () => {
                             data-ad-slot="1234567890"
                             className="my-4 mx-4"
                         />
-
-                        <StudyBuddy mode="general" />
                     </>
                 );
         }
