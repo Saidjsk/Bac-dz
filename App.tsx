@@ -10,8 +10,6 @@ import TipsPage from './components/TipsPage';
 import DailyGoal from './components/DailyGoal';
 import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
-import AdBanner from './components/AdBanner';
-import WelcomeModal from './components/WelcomeModal';
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon, 
@@ -150,12 +148,6 @@ const App: React.FC = () => {
                                 ))}
                             </div>
                         </div>
-
-                        <AdBanner
-                            data-ad-client="ca-pub-1234567890123456" 
-                            data-ad-slot="1234567890"
-                            className="my-4 mx-4"
-                        />
                     </>
                 );
         }
@@ -163,7 +155,6 @@ const App: React.FC = () => {
 
     return (
         <div className="max-w-md mx-auto min-h-screen font-sans flex flex-col shadow-2xl">
-            <WelcomeModal />
             <Sidebar 
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}

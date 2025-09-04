@@ -47,7 +47,7 @@ const Countdown: React.FC = () => {
                     <ClockIcon className="w-5 h-5" />
                     <span className="font-bold">العد التنازلي للبكالوريا</span>
                 </div>
-                <span className="text-sm font-semibold">15 جوان 2025</span>
+                <span className="text-sm font-semibold">15 جوان 2026</span>
             </div>
             <div className="flex flex-row-reverse text-center py-4 divide-x-2 divide-gray-100 dark:divide-gray-700/50">
                 {timeUnits.map((unit) => (
