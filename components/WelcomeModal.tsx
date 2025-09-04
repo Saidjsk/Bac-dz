@@ -1,1 +1,7 @@
-// This component is no longer used and its content has been cleared as per the request to remove the welcome message.
+import React from 'react';
+
+const WelcomeModal: React.FC = () => {
+    return null;
+};
+
+export default WelcomeModal;

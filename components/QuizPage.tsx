@@ -124,10 +124,10 @@ const QuizPage: React.FC<QuizPageProps> = ({ quiz, onBack, onComplete }) => {
                             const isCorrect = userAnswer === q.correctAnswerIndex;
                             const isAccordionOpen = openAccordionIndex === index;
                             return (
-                                <div key={q.id} className={`rounded-xl overflow-hidden transition-all duration-300 ${isAccordionOpen ? 'bg-white dark:bg-slate-800 shadow-md' : 'shadow-sm'} ${isCorrect ? 'border border-green-200 dark:border-green-800' : 'border border-red-200 dark:border-red-800'}`}>
+                                <div key={q.id} className={`bg-white dark:bg-slate-800 rounded-xl overflow-hidden transition-all duration-300 shadow-sm border ${isCorrect ? 'border-green-200 dark:border-green-800' : 'border-red-200 dark:border-red-800'}`}>
                                     <button
                                         onClick={() => setOpenAccordionIndex(isAccordionOpen ? null : index)}
-                                        className={`w-full flex items-center justify-between text-right p-4 transition-colors duration-200 ${!isAccordionOpen && (isCorrect ? 'bg-green-50 dark:bg-green-900/30' : 'bg-red-50 dark:bg-red-900/30')} hover:bg-slate-100 dark:hover:bg-slate-700/50`}
+                                        className="w-full flex items-center justify-between text-right p-4 transition-colors duration-200 hover:bg-slate-50 dark:hover:bg-slate-700/50"
                                         aria-expanded={isAccordionOpen}
                                     >
                                         <div className="flex items-center gap-3">
@@ -139,21 +139,33 @@ const QuizPage: React.FC<QuizPageProps> = ({ quiz, onBack, onComplete }) => {
                                      <div className={`grid grid-rows-[0fr] transition-all duration-300 ease-in-out ${isAccordionOpen ? 'grid-rows-[1fr]' : ''}`}>
                                         <div className="overflow-hidden">
                                             <div className="px-4 pb-4 pt-2 border-t border-slate-200 dark:border-slate-700">
-                                                <div className="mt-3 text-sm space-y-3">
-                                                    <p className="flex items-start gap-2">
-                                                        <span className="font-bold w-24 flex-shrink-0">إجابتك:</span>
-                                                        <span className={`px-2 py-1 rounded-md text-sm font-medium ${isCorrect ? 'bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300' : 'bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-300'}`}>
-                                                            {userAnswer !== undefined ? q.options[userAnswer] : 'لم تجب'}
-                                                        </span>
-                                                    </p>
-                                                    {!isCorrect && (
-                                                        <p className="flex items-start gap-2">
-                                                            <span className="font-bold w-24 flex-shrink-0">الإجابة الصحيحة:</span>
-                                                            <span className="px-2 py-1 rounded-md bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300 text-sm font-medium">
-                                                                {q.options[q.correctAnswerIndex]}
-                                                            </span>
-                                                        </p>
-                                                    )}
+                                                <div className="mt-3 text-sm space-y-2">
+                                                    {q.options.map((option, optionIndex) => {
+                                                        const isUserSelection = userAnswer === optionIndex;
+                                                        const isTheCorrectAnswer = q.correctAnswerIndex === optionIndex;
+
+                                                        const baseClasses = "w-full text-right p-3 rounded-lg border text-base font-medium flex items-center gap-3";
+                                                        let styleClasses = "";
+                                                        let icon = null;
+
+                                                        if (isTheCorrectAnswer) {
+                                                            styleClasses = "bg-green-50 dark:bg-green-900/30 border-green-500 text-green-800 dark:text-green-300";
+                                                            icon = <CheckCircleIcon className="w-5 h-5 text-green-500 flex-shrink-0" />;
+                                                        } else if (isUserSelection && !isTheCorrectAnswer) {
+                                                            styleClasses = "bg-red-50 dark:bg-red-900/30 border-red-500 text-red-800 dark:text-red-300";
+                                                            icon = <XCircleIcon className="w-5 h-5 text-red-500 flex-shrink-0" />;
+                                                        } else {
+                                                            styleClasses = "bg-slate-100 dark:bg-slate-700/50 border-transparent text-slate-600 dark:text-slate-400 opacity-80";
+                                                            icon = <div className="w-5 h-5 flex-shrink-0"></div>; // Placeholder for alignment
+                                                        }
+
+                                                        return (
+                                                            <div key={optionIndex} className={`${baseClasses} ${styleClasses}`}>
+                                                                {icon}
+                                                                <span>{option}</span>
+                                                            </div>
+                                                        );
+                                                    })}
                                                 </div>
                                                 {q.explanation && (
                                                     <div className="mt-4 border-t border-slate-200 dark:border-slate-700 pt-3">

@@ -11,7 +11,7 @@ const Economics2013Lesson: React.FC = () => {
     return (
         <div className="bg-transparent" dir="rtl">
             <div className="p-4 sm:p-6">
-                <header className="text-center border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-8 bg-white dark:bg-gray-800 shadow-sm">
+                <header className="text-center border border-gray-200 dark:border-gray-700 rounded-lg p-4 mb-8 bg-white dark:bg-gray-800 shadow-sm text-gray-800 dark:text-gray-200">
                     <div className="flex justify-between items-start text-xs sm:text-base">
                         <div className="text-center">
                             <p className="font-semibold">الجمهورية الجزائرية الديمقراطية الشعبية</p>
@@ -42,31 +42,31 @@ const Economics2013Lesson: React.FC = () => {
                     
                     <div className="divide-y divide-gray-200 dark:divide-gray-700">
                         <div>
-                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30">الجزء الأول: ( 16 نقطة )</h3>
+                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30 text-gray-700 dark:text-gray-300">الجزء الأول: ( 16 نقطة )</h3>
                             <AccordionItem title="السؤال الأول : ( 06 نقاط )" isOpen={openAccordion === 't1q1'} onClick={() => handleAccordionClick('t1q1')}>
-                                <p>يعتبر الإئتمان من أهم المعاملات التي تقوم بها المصارف التجارية.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">يعتبر الإئتمان من أهم المعاملات التي تقوم بها المصارف التجارية.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>اشرح صور الإئتمان.</li>
                                     <li>اذكر المعاملات المصرفية الأخرى.</li>
                                 </ol>
                             </AccordionItem>
                              <AccordionItem title="السؤال الثاني : ( 06 نقاط )" isOpen={openAccordion === 't1q2'} onClick={() => handleAccordionClick('t1q2')}>
-                                <p>التضخم: ظاهرة اقتصادية تتميز بحركة تصاعدية للأسعار.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">التضخم: ظاهرة اقتصادية تتميز بحركة تصاعدية للأسعار.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>اذكر أنواع التضخم مع الشرح المختصر.</li>
                                     <li>اشرح سياسة تحقيق التوازن في الميزانية العامة كإجراء لمعالجة ظاهرة التضخم.</li>
                                 </ol>
                             </AccordionItem>
                             <AccordionItem title="السؤال الثالث: ( 04 نقاط )" isOpen={openAccordion === 't1q3'} onClick={() => handleAccordionClick('t1q3')}>
-                                 <p>الدافعية: هي تشجيع الأفراد وتحفيزهم للعمل أكثر.</p>
-                                 <p className="pr-6 mt-2">- اشرح العوامل المؤثرة في الدافعية.</p>
+                                 <p className="leading-relaxed">الدافعية: هي تشجيع الأفراد وتحفيزهم للعمل أكثر.</p>
+                                 <p className="pr-6 leading-relaxed">- اشرح العوامل المؤثرة في الدافعية.</p>
                             </AccordionItem>
                         </div>
                          <div>
-                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30">الجزء الثاني: ( 04 نقاط)</h3>
+                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30 text-gray-700 dark:text-gray-300">الجزء الثاني: ( 04 نقاط)</h3>
                              <AccordionItem title="التمرين" isOpen={openAccordion === 't1p2'} onClick={() => handleAccordionClick('t1p2')}>
-                                <p>السوق: هو المكان الذي يلتقي فيه البائع والمشتري لتبادل السلع والخدمات.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">السوق: هو المكان الذي يلتقي فيه البائع والمشتري لتبادل السلع والخدمات.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>اشرح أنواع الأسواق.</li>
                                     <li>اذكر أشكاله، ثم اشرح سوق المنافسة الكاملة (التامة).</li>
                                 </ol>
@@ -84,35 +84,35 @@ const Economics2013Lesson: React.FC = () => {
                     
                     <div className="divide-y divide-gray-200 dark:divide-gray-700">
                         <div>
-                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30">الجزء الأول: ( 16 نقطة )</h3>
+                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30 text-gray-700 dark:text-gray-300">الجزء الأول: ( 16 نقطة )</h3>
                             <AccordionItem title="السؤال الأول : ( 05 نقاط )" isOpen={openAccordion === 't2q1'} onClick={() => handleAccordionClick('t2q1')}>
-                                <p>تعتبر البطالة ظاهرة اقتصادية واجتماعية تعاني منها العديد من الدول بما فيها الجزائر.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">تعتبر البطالة ظاهرة اقتصادية واجتماعية تعاني منها العديد من الدول بما فيها الجزائر.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>حدد أسباب البطالة.</li>
                                     <li>ماهي إجراءات التخفيف من ظاهرة البطالة؟</li>
                                 </ol>
                             </AccordionItem>
                             <AccordionItem title="السؤال الثاني : ( 06 نقاط )" isOpen={openAccordion === 't2q2'} onClick={() => handleAccordionClick('t2q2')}>
-                                <p>تتخذ السلطة النقدية للبلاد في مجال الصرف عدة إجراءات وتدابير بغية تحقيق أهداف مسطرة.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">تتخذ السلطة النقدية للبلاد في مجال الصرف عدة إجراءات وتدابير بغية تحقيق أهداف مسطرة.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>اذكر أسباب الصرف.</li>
                                     <li>حدد أهداف سياسة الصرف.</li>
                                     <li>اشرح وسائل سياسة الصرف.</li>
                                 </ol>
                             </AccordionItem>
                             <AccordionItem title="السؤال الثالث: ( 05 نقاط )" isOpen={openAccordion === 't2q3'} onClick={() => handleAccordionClick('t2q3')}>
-                                <p>تتولى المنظمة العالمية للتجارة " OMC " عملية الإشراف على مختلف المبادلات التجارية الخارجية.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">تتولى المنظمة العالمية للتجارة " OMC " عملية الإشراف على مختلف المبادلات التجارية الخارجية.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>عرّف المنظمة العالمية للتجارة.</li>
                                     <li>بيّن دور المنظمة العالمية للتجارة.</li>
                                 </ol>
                             </AccordionItem>
                         </div>
                          <div>
-                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30">الجزء الثاني: ( 04 نقاط)</h3>
+                            <h3 className="font-bold text-xl p-5 bg-gray-50 dark:bg-gray-900/30 text-gray-700 dark:text-gray-300">الجزء الثاني: ( 04 نقاط)</h3>
                              <AccordionItem title="التمرين" isOpen={openAccordion === 't2p2'} onClick={() => handleAccordionClick('t2p2')}>
-                                <p>يعتبر الاتصال وسيلة هامة للتسيير.</p>
-                                <ol className="list-decimal pr-6 mt-2 space-y-1">
+                                <p className="leading-relaxed">يعتبر الاتصال وسيلة هامة للتسيير.</p>
+                                <ol className="list-decimal pr-6 space-y-2">
                                     <li>عرّف الاتصال.</li>
                                     <li>اشرح مكوناته.</li>
                                 </ol>

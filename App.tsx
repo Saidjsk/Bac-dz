@@ -10,7 +10,6 @@ import TipsPage from './components/TipsPage';
 import DailyGoal from './components/DailyGoal';
 import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
-import AdBanner from './components/AdBanner';
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon, 
@@ -30,16 +29,16 @@ import {
 } from './components/icons';
 
 const subjects: Subject[] = [
-    { name: 'الرياضيات', icon: <CalculatorIcon />, color: 'bg-gradient-to-br from-red-500 to-rose-500' },
-    { name: 'التاريخ والجغرافيا', icon: <CompassIcon />, color: 'bg-gradient-to-br from-orange-400 to-amber-500' },
-    { name: 'الإقتصاد', icon: <BarChartIcon />, color: 'bg-gradient-to-br from-green-400 to-emerald-500' },
-    { name: 'اللغة العربية', icon: <PencilIcon />, color: 'bg-gradient-to-br from-blue-500 to-sky-500' },
-    { name: 'اللغة الفرنسية', icon: <BookmarkIcon />, color: 'bg-gradient-to-br from-pink-400 to-fuchsia-500' },
-    { name: 'اللغة الأمازيغية', icon: <GridIcon />, color: 'bg-gradient-to-br from-purple-500 to-violet-600' },
-    { name: 'اللغة الإنجليزية', icon: <GlobeIcon />, color: 'bg-gradient-to-br from-cyan-400 to-teal-500' },
-    { name: 'العلوم الإسلامية', icon: <BookOpenIcon />, color: 'bg-gradient-to-br from-teal-400 to-cyan-500' },
-    { name: 'الفلسفة', icon: <LightBulbIcon />, color: 'bg-gradient-to-br from-indigo-500 to-violet-500' },
-    { name: 'القانون', icon: <ScaleIcon />, color: 'bg-gradient-to-br from-yellow-400 to-lime-500' },
+    { name: 'الرياضيات', icon: <CalculatorIcon />, color: 'bg-gradient-to-br from-red-500 to-rose-500', cardColor: 'bg-red-50' },
+    { name: 'التاريخ والجغرافيا', icon: <CompassIcon />, color: 'bg-gradient-to-br from-orange-400 to-amber-500', cardColor: 'bg-orange-50' },
+    { name: 'الإقتصاد', icon: <BarChartIcon />, color: 'bg-gradient-to-br from-green-400 to-emerald-500', cardColor: 'bg-green-50' },
+    { name: 'اللغة العربية', icon: <PencilIcon />, color: 'bg-gradient-to-br from-blue-500 to-sky-500', cardColor: 'bg-blue-50' },
+    { name: 'اللغة الفرنسية', icon: <BookmarkIcon />, color: 'bg-gradient-to-br from-pink-400 to-fuchsia-500', cardColor: 'bg-pink-50' },
+    { name: 'اللغة الأمازيغية', icon: <GridIcon />, color: 'bg-gradient-to-br from-purple-500 to-violet-600', cardColor: 'bg-purple-50' },
+    { name: 'اللغة الإنجليزية', icon: <GlobeIcon />, color: 'bg-gradient-to-br from-cyan-400 to-teal-500', cardColor: 'bg-cyan-50' },
+    { name: 'العلوم الإسلامية', icon: <BookOpenIcon />, color: 'bg-gradient-to-br from-teal-400 to-cyan-500', cardColor: 'bg-teal-50' },
+    { name: 'الفلسفة', icon: <LightBulbIcon />, color: 'bg-gradient-to-br from-indigo-500 to-violet-500', cardColor: 'bg-indigo-50' },
+    { name: 'القانون', icon: <ScaleIcon />, color: 'bg-gradient-to-br from-yellow-400 to-lime-500', cardColor: 'bg-yellow-50' },
 ];
 
 const navItems: NavItem[] = [
@@ -92,6 +91,14 @@ const App: React.FC = () => {
         window.history.pushState(null, '', window.location.pathname.split('#')[0] || '/');
     };
 
+    const handleNavItemClick = (name: string) => {
+        setActiveNav(name);
+        if (selectedSubject) {
+            setSelectedSubject(null);
+            window.history.pushState(null, '', window.location.pathname.split('#')[0] || '/');
+        }
+    };
+
     useEffect(() => {
         const handlePopState = (event: PopStateEvent) => {
             if (event.state && event.state.subjectName) {
@@ -140,7 +147,6 @@ const App: React.FC = () => {
                     <>
                         <Countdown />
                         <DailyGoal />
-                        <AdBanner />
                         <div className="p-4">
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">المواد الدراسية</h2>
                             <div className="grid grid-cols-2 gap-4">
@@ -184,7 +190,7 @@ const App: React.FC = () => {
                 </div>
             </main>
             {!isViewingLesson && (
-                <BottomNav items={navItems} activeItem={activeNav} onItemClick={setActiveNav} />
+                <BottomNav items={navItems} activeItem={activeNav} onItemClick={handleNavItemClick} />
             )}
         </div>
     );

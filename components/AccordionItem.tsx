@@ -16,8 +16,10 @@ const AccordionItem: React.FC<AccordionItemProps> = ({ title, children, isOpen, 
         </button>
         <div className={`grid grid-rows-[0fr] transition-all duration-500 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : ''}`}>
             <div className="overflow-hidden">
-                 <div className="p-5 border-t border-gray-100 dark:border-gray-700/50 text-gray-700 dark:text-gray-300 prose-sm sm:prose dark:prose-invert max-w-none prose-li:my-2 prose-headings:text-blue-600 dark:prose-headings:text-blue-400">
-                    {children}
+                 <div className="p-5 border-t border-gray-100 dark:border-gray-700/50 text-gray-700 dark:text-gray-300">
+                    <div className="space-y-4">
+                        {children}
+                    </div>
                 </div>
             </div>
         </div>
