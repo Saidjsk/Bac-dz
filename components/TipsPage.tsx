@@ -48,6 +48,7 @@ const TipsPage: React.FC = () => {
         setTips([]);
 
         try {
+            // FIX: Use process.env.API_KEY as per the coding guidelines to resolve the import.meta.env error.
             if (!process.env.API_KEY) {
                 throw new Error("API_KEY_MISSING");
             }
@@ -89,7 +90,7 @@ const TipsPage: React.FC = () => {
         } catch (e) {
             console.error("Error fetching tips:", e);
             if (e instanceof Error && e.message === 'API_KEY_MISSING') {
-                setError('فشل جلب النصائح. لا يمكن الوصول إلى مفتاح API. تأكد من أن اسم المتغير هو `API_KEY` في إعدادات النشر الخاصة بك.');
+                setError('فشل جلب النصائح. لا يمكن الوصول إلى مفتاح API. يرجى التأكد من أن اسم المتغير في إعدادات Vercel هو `API_KEY`.');
             } else {
                 setError('عذراً، حدث خطأ أثناء جلب النصائح. يرجى المحاولة مرة أخرى.');
             }

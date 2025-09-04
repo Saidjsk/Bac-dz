@@ -66,6 +66,7 @@ const StudyBuddy: React.FC<StudyBuddyProps> = ({ mode, lessonContent, subjectNam
 
     const initializeChat = useCallback(async () => {
         try {
+            // FIX: Use process.env.API_KEY as per the coding guidelines to resolve the import.meta.env error.
             if (!process.env.API_KEY) {
                 throw new Error("API_KEY_MISSING");
             }
@@ -103,7 +104,7 @@ const StudyBuddy: React.FC<StudyBuddyProps> = ({ mode, lessonContent, subjectNam
         } catch (e: any) {
             console.error(e);
             if (e instanceof Error && e.message === 'API_KEY_MISSING') {
-                setError("فشل تهيئة المساعد. لا يمكن الوصول إلى مفتاح API. تأكد من أن اسم المتغير هو `API_KEY` في إعدادات النشر الخاصة بك (مثل Vercel).");
+                setError("فشل تهيئة المساعد. لا يمكن الوصول إلى مفتاح API. يرجى التأكد من أن اسم المتغير في إعدادات Vercel هو `API_KEY`.");
             } else {
                 setError("لا يمكن تهيئة المساعد الدراسي. حدث خطأ غير متوقع.");
             }
