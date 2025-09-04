@@ -48,11 +48,10 @@ const TipsPage: React.FC = () => {
         setTips([]);
 
         try {
-            // FIX: Use process.env.API_KEY as per the coding guidelines to resolve the import.meta.env error.
-            if (!process.env.NEXT_PUBLIC_API_KEY) {
+            if (!process.env.API_KEY) {
                 throw new Error("API_KEY_MISSING");
             }
-            const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
             
             const prompt = `أعطني 5 نصائح أساسية لطلاب البكالوريا الجزائريين حول '${category.name}'. لكل نصيحة، قدم عنوانًا قصيرًا وجذابًا (لا يزيد عن 3 كلمات) وشرحًا موجزًا وعمليًا ومشجعًا.`;
             
@@ -90,7 +89,7 @@ const TipsPage: React.FC = () => {
         } catch (e) {
             console.error("Error fetching tips:", e);
             if (e instanceof Error && e.message === 'API_KEY_MISSING') {
-                setError('فشل جلب النصائح. لا يمكن الوصول إلى مفتاح API. يرجى التأكد من أن اسم المتغير في إعدادات Vercel هو `NEXT_PUBLIC_API_KEY`.');
+                setError('فشل جلب النصائح. مفتاح API غير متوفر.');
             } else {
                 setError('عذراً، حدث خطأ أثناء جلب النصائح. يرجى المحاولة مرة أخرى.');
             }

@@ -104,10 +104,9 @@ const StudyPlanGenerator: React.FC = () => {
         setError(null);
 
         try {
-            // FIX: Use process.env.API_KEY as per the coding guidelines to resolve the import.meta.env error.
-            if (!process.env.NEXT_PUBLIC_API_KEY) throw new Error("API_KEY_MISSING");
+            if (!process.env.API_KEY) throw new Error("API_KEY_MISSING");
 
-            const ai = new GoogleGenAI({ apiKey: process.env.NEXT_PUBLIC_API_KEY });
+            const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
             const prompt = `أنت خبير في التخطيط الدراسي لطلاب البكالوريا الجزائريين. قم بإنشاء خطة مراجعة مفصلة لمدة ${days} يومًا، بمعدل ${hours} ساعة دراسة يوميًا. يجب أن تركز الخطة على المواد التالية: ${selectedSubjects.join('، ')}. قم بتوزيع المواد بشكل منطقي على مدار الأيام، مع مراعاة التوازن بين المواد العلمية والأدبية. لكل يوم، قدم قائمة بالمهام مع اقتراح فترات زمنية واقعية. يجب أن يكون الناتج بتنسيق JSON حصراً.`;
 
@@ -149,7 +148,7 @@ const StudyPlanGenerator: React.FC = () => {
         } catch (e) {
             console.error("Error generating study plan:", e);
             if (e instanceof Error && e.message === 'API_KEY_MISSING') {
-                setError('فشل إنشاء الخطة. لا يمكن الوصول إلى مفتاح API. يرجى التأكد من أن اسم المتغير في إعدادات Vercel هو `NEXT_PUBLIC_API_KEY`.');
+                setError('فشل إنشاء الخطة. مفتاح API غير متوفر.');
             } else {
                 setError('عذرًا، حدث خطأ أثناء إنشاء الخطة. قد يكون هناك ضغط على الخدمة. يرجى المحاولة مرة أخرى.');
             }
