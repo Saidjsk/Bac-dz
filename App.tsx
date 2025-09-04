@@ -10,6 +10,7 @@ import TipsPage from './components/TipsPage';
 import DailyGoal from './components/DailyGoal';
 import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
+import AdBanner from './components/AdBanner';
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon, 
@@ -139,7 +140,7 @@ const App: React.FC = () => {
                     <>
                         <Countdown />
                         <DailyGoal />
-
+                        <AdBanner />
                         <div className="p-4">
                             <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">المواد الدراسية</h2>
                             <div className="grid grid-cols-2 gap-4">
