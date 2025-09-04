@@ -3,7 +3,7 @@ import { ClockIcon } from './icons';
 
 const Countdown: React.FC = () => {
     const calculateTimeLeft = useCallback(() => {
-        const targetDate = new Date('2025-06-15T08:00:00');
+        const targetDate = new Date('2026-06-15T08:00:00');
         const difference = +targetDate - +new Date();
         let timeLeft = {
             days: 0,
