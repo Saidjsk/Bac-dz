@@ -223,26 +223,40 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                 </header>
 
                 {hasCorrection(viewingYear) && (
-                     <div className="flex justify-center border-b border-gray-200 dark:border-gray-700 sticky top-[73px] bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm z-10">
-                        <button 
-                            onClick={() => setTopicView('topic')}
-                            className={`px-6 py-3 font-bold text-center border-b-2 transition-colors duration-300 ${topicView === 'topic' ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
-                            aria-current={topicView === 'topic'}
-                        >
-                            الموضوع
-                        </button>
-                        <button
-                            onClick={() => setTopicView('correction')}
-                            className={`px-6 py-3 font-bold text-center border-b-2 transition-colors duration-300 ${topicView === 'correction' ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
-                            aria-current={topicView === 'correction'}
-                        >
-                            الحل
-                        </button>
+                     <div className="px-4 py-2 sticky top-[73px] bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm z-10 border-b border-gray-200 dark:border-gray-700">
+                        <div className="relative bg-gray-200 dark:bg-gray-700/50 p-1 rounded-full flex w-full max-w-xs mx-auto">
+                             <div
+                                className="absolute top-1 bottom-1 right-1 w-[calc(50%-4px)] bg-white dark:bg-blue-600 rounded-full shadow-md transition-transform duration-300 ease-in-out"
+                                style={{
+                                    transform: topicView === 'topic' ? 'translateX(0%)' : 'translateX(-100%)',
+                                }}
+                            />
+                            <button 
+                                onClick={() => setTopicView('topic')}
+                                className={`relative z-10 w-1/2 py-2.5 text-center rounded-full font-bold transition-colors duration-300 ${
+                                    topicView === 'topic' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-gray-300'
+                                }`}
+                                aria-current={topicView === 'topic'}
+                            >
+                                الموضوع
+                            </button>
+                            <button
+                                onClick={() => setTopicView('correction')}
+                                className={`relative z-10 w-1/2 py-2.5 text-center rounded-full font-bold transition-colors duration-300 ${
+                                    topicView === 'correction' ? 'text-white' : 'text-gray-600 dark:text-gray-300'
+                                }`}
+                                aria-current={topicView === 'correction'}
+                            >
+                                الحل
+                            </button>
+                        </div>
                     </div>
                 )}
 
-                <div className="flex-grow overflow-y-auto animate-slide-up">
-                    {topicView === 'topic' ? renderLessonContent() : renderCorrectionContent()}
+                <div className="flex-grow overflow-y-auto">
+                    <div key={topicView} className="animate-fade-in">
+                        {topicView === 'topic' ? renderLessonContent() : renderCorrectionContent()}
+                    </div>
                 </div>
             </div>
         );
