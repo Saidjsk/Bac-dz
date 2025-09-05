@@ -192,7 +192,7 @@ const App: React.FC = () => {
                     theme={theme}
                 />
             )}
-            <main className={`flex-grow ${!isViewingLesson ? 'pb-20 overflow-y-auto' : ''}`}>
+            <main className={`flex-grow ${!isViewingLesson ? `pb-20 ${selectedSubject === null ? 'overflow-y-auto' : ''}` : ''}`}>
                  <div key={selectedSubject ? selectedSubject.name : activeNav} className="page h-full">
                     {renderPageContent()}
                 </div>

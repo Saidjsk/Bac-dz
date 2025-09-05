@@ -5,6 +5,8 @@ import EconomicsLessons from './EconomicsLessons';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
 import { accountingTopics } from '../data/accountingTopics';
+import { economicsTopics } from '../data/economicsTopics';
+import { lawTopics } from '../data/lawTopics';
 import PDFDisplay from './PDFDisplay';
 
 interface ProgressData {
@@ -113,12 +115,24 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         if (subject.name === 'التسيير المحاسبي و المالي') {
             return !!accountingTopics[year]?.exam;
         }
+        if (subject.name === 'الإقتصاد') {
+            return !!economicsTopics[year]?.exam;
+        }
+        if (subject.name === 'القانون') {
+            return !!lawTopics[year]?.exam;
+        }
         return false;
     }
     
     const hasCorrection = (year: number) => {
         if (subject.name === 'التسيير المحاسبي و المالي') {
             return !!accountingTopics[year]?.solution;
+        }
+        if (subject.name === 'الإقتصاد') {
+            return !!economicsTopics[year]?.solution;
+        }
+        if (subject.name === 'القانون') {
+            return !!lawTopics[year]?.solution;
         }
         return false;
     };
@@ -134,12 +148,24 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear && accountingTopics[viewingYear]?.exam) {
             return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={accountingTopics[viewingYear].exam} />;
         }
+        if (subject.name === 'الإقتصاد' && viewingYear && economicsTopics[viewingYear]?.exam) {
+            return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={economicsTopics[viewingYear].exam} />;
+        }
+        if (subject.name === 'القانون' && viewingYear && lawTopics[viewingYear]?.exam) {
+            return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={lawTopics[viewingYear].exam} />;
+        }
         return null;
     }
 
     const renderCorrectionContent = () => {
          if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear && accountingTopics[viewingYear]?.solution) {
             return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={accountingTopics[viewingYear].solution} />;
+        }
+        if (subject.name === 'الإقتصاد' && viewingYear && economicsTopics[viewingYear]?.solution) {
+            return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={economicsTopics[viewingYear].solution} />;
+        }
+        if (subject.name === 'القانون' && viewingYear && lawTopics[viewingYear]?.solution) {
+            return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={lawTopics[viewingYear].solution} />;
         }
         return null;
     }
@@ -322,7 +348,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
             </div>
             
             <div 
-                className="flex-grow w-full overflow-hidden" 
+                className="flex-grow w-full overflow-hidden min-h-0" 
             >
                 <div
                     className="flex h-full transition-transform duration-300 ease-in-out"
