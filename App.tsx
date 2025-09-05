@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Header } from './components/Header';
 import Countdown from './components/Countdown';
 import SubjectCard from './components/SubjectCard';
@@ -73,10 +73,10 @@ const App: React.FC = () => {
         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
     };
 
-    const handleSubjectSelect = (subject: Subject) => {
+    const handleSubjectSelect = useCallback((subject: Subject) => {
         setSelectedSubject(subject);
         window.history.pushState({ subjectName: subject.name }, '', `#${encodeURIComponent(subject.name)}`);
-    };
+    }, []);
 
     const handleBack = () => {
         setSelectedSubject(null);
