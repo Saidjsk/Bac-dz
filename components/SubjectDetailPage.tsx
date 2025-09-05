@@ -127,11 +127,13 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     const activeTabIndex = TABS.indexOf(activeTab);
 
     const handleTouchStart = (e: React.TouchEvent) => {
+        if (e.targetTouches.length === 0) return;
         touchStartX.current = e.targetTouches[0].clientX;
         touchMoveX.current = e.targetTouches[0].clientX; // Initialize moveX
     };
 
     const handleTouchMove = (e: React.TouchEvent) => {
+        if (e.targetTouches.length === 0) return;
         touchMoveX.current = e.targetTouches[0].clientX;
     };
 
@@ -203,9 +205,12 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                 </ol>
             </nav>
 
-            <section className="flex items-center gap-4 mb-6">
-                <div className={`w-20 h-20 ${subject.color} rounded-2xl flex items-center justify-center shadow-lg`}>
-                    {React.cloneElement(subject.icon, { className: 'w-10 h-10 text-white' })}
+            <section className="flex items-center gap-6 mb-6">
+                <div className="relative w-36 h-36 flex-shrink-0">
+                    <div className={`animate-subtle-glow absolute -inset-4 ${subject.color} rounded-full blur-3xl opacity-70`}></div>
+                    <div className={`relative w-full h-full rounded-[2.25rem] flex items-center justify-center bg-white/60 dark:bg-gray-900/60 backdrop-blur-3xl border border-white/70 dark:border-gray-500/50 shadow-2xl`}>
+                        {React.cloneElement(subject.icon, { className: 'w-24 h-24 object-contain' })}
+                    </div>
                 </div>
                 <div>
                     <h2 className="text-4xl font-extrabold text-gray-800 dark:text-gray-100">{subject.name}</h2>

@@ -29,15 +29,15 @@ export const CalculatorIcon: React.FC<IconProps> = ({ className }) => (
 );
 
 export const BarChartIcon: React.FC<IconProps> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-  </svg>
+    <svg className={className} fill="currentColor" viewBox="0 0 20 20">
+        <path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z" />
+    </svg>
 );
 
 export const CompassIcon: React.FC<IconProps> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A9 9 0 112.382 8.382 9 9 0 0118.382 18.382z" />
-  </svg>
+    <svg className={className} fill="currentColor" viewBox="0 0 20 20">
+      <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM2 10a8 8 0 0113.88-5.332 6 6 0 00-7.21 7.21A7.96 7.96 0 012 10zm14.12 3.88a6 6 0 00-7.21-7.21A8.003 8.003 0 0118 10a7.96 7.96 0 01-1.88 5.332z" />
+    </svg>
 );
 
 export const GlobeIcon: React.FC<IconProps> = ({ className }) => (
@@ -47,9 +47,9 @@ export const GlobeIcon: React.FC<IconProps> = ({ className }) => (
 );
 
 export const PencilIcon: React.FC<IconProps> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-  </svg>
+    <svg className={className} fill="currentColor" viewBox="0 0 20 20">
+        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+    </svg>
 );
 
 export const BookmarkIcon: React.FC<IconProps> = ({ className }) => (
@@ -83,9 +83,10 @@ export const QuestionMarkCircleIcon: React.FC<IconProps> = ({ className }) => (
 );
 
 export const LightBulbIcon: React.FC<IconProps> = ({ className }) => (
-  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-  </svg>
+    <svg className={className} fill="currentColor" viewBox="0 0 20 20">
+        <path d="M11 18.5a1 1 0 10-2 0v.5a1 1 0 102 0v-.5z" />
+        <path fillRule="evenodd" d="M10 2a5.5 5.5 0 00-4.793 8.649l-1.352 2.704A1 1 0 004.852 15h10.296a1 1 0 00.997-1.647l-1.352-2.704A5.5 5.5 0 0010 2zm0 3a.5.5 0 01.5.5v2.5a.5.5 0 01-1 0v-2.5a.5.5 0 01.5-.5z" clipRule="evenodd" />
+    </svg>
 );
 
 export const SunIcon: React.FC<IconProps> = ({ className }) => (
@@ -119,10 +120,11 @@ export const GridIcon: React.FC<IconProps> = ({ className }) => (
 );
 
 export const ScaleIcon: React.FC<IconProps> = ({ className }) => (
-    <svg className={className} fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.036.243c-2.132 0-4.133-.526-5.85-1.441m-7.372 0c1.717.915 3.718 1.441 5.85 1.441a5.988 5.988 0 0 1-2.036-.243c-.483-.174-.711-.703-.59-1.202L5.25 4.97m7.372 0c.621-.11 1.256-.204 1.875-.275M5.25 4.97c-.621-.11-1.256-.204-1.875-.275m15 0c.245.038.488.08.73.127m-15 0c-.245.038-.488.08-.73.127" />
+    <svg className={className} viewBox="0 0 20 20" fill="currentColor">
+        <path d="M3 17.5V19h14v-1.5a.5.5 0 00-.5-.5h-13a.5.5 0 00-.5.5zM4 16h12V5H4v11zM3 4.5V3h14v1.5a.5.5 0 01-.5.5h-13a.5.5 0 01-.5-.5z"/>
     </svg>
 );
+
 
 export const ChevronDownIcon: React.FC<IconProps> = ({ className }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -187,5 +189,24 @@ export const TrashIcon: React.FC<IconProps> = ({ className }) => (
 export const GraduationCapIcon: React.FC<IconProps> = ({ className }) => (
     <svg className={className} viewBox="0 0 20 20" fill="currentColor">
         <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 011.056 0l4-1.822a1 1 0 000-1.84l-4-1.822zM10 12.363l-7-3.182v5.405a1 1 0 001 1h12a1 1 0 001-1v-5.405l-7 3.182zM5.25 10.051l4 1.822a1 1 0 00.992 0l4-1.822v.97l-4 1.822a1 1 0 01-.992 0l-4-1.822v-.97z" />
+    </svg>
+);
+
+export const TranslateIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4.86 19l5.09-5.02 3.92 3.91.01-.01z M18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7l1.62-4.33L19.12 17h-3.24z"/>
+    </svg>
+);
+
+export const MosqueIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="currentColor" viewBox="0 0 20 20">
+      <path d="M1 6.5A1.5 1.5 0 012.5 5h15A1.5 1.5 0 0119 6.5v1.88a1.5 1.5 0 01-.33.88l-1.33 2.22a1.5 1.5 0 01-1.24.52H3.89a1.5 1.5 0 01-1.24-.52L1.33 9.26a1.5 1.5 0 01-.33-.88V6.5zM17.5 4a.5.5 0 000-1H2.5a.5.5 0 000 1h15zM2 14.5A1.5 1.5 0 013.5 13h13a1.5 1.5 0 010 3h-13A1.5 1.5 0 012 14.5z"/>
+      <path d="M8 5a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z"/>
+    </svg>
+);
+
+export const MathToolsIcon: React.FC<IconProps> = ({ className }) => (
+    <svg className={className} fill="currentColor" viewBox="0 0 20 20">
+        <path d="M3 3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H3zm12 4a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1V8a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H9a1 1 0 01-1-1V8a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H5a1 1 0 01-1-1V8a1 1 0 011-1h2zm10 4a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H9a1 1 0 01-1-1v-1a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1a1 1 0 011-1h2z" />
     </svg>
 );

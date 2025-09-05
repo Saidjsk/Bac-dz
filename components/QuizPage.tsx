@@ -57,6 +57,26 @@ const QuizPage: React.FC<QuizPageProps> = ({ quiz, onBack, onComplete }) => {
     const [score, setScore] = useState(0);
     const [openAccordionIndex, setOpenAccordionIndex] = useState<number | null>(null);
 
+    // Early return for invalid quiz data to prevent runtime errors
+    if (!quiz || !quiz.questions || quiz.questions.length === 0) {
+        return (
+            <div className="bg-slate-50 dark:bg-slate-900 h-full flex flex-col font-sans">
+                <header className="flex items-center gap-4 p-4 border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm z-10">
+                     <button onClick={onBack} className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Back to subject">
+                        <BackArrowIcon className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+                    </button>
+                    <div>
+                        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">خطأ في الاختبار</h2>
+                        {quiz && <p className="text-sm text-slate-500 dark:text-slate-400">{quiz.title}</p>}
+                    </div>
+                </header>
+                <main className="flex-grow flex items-center justify-center text-center p-4">
+                    <p className="text-slate-600 dark:text-slate-400">عذراً، هذا الاختبار غير متوفر حالياً أو لا يحتوي على أسئلة.</p>
+                </main>
+            </div>
+        );
+    }
+
     const handleAnswerSelect = (optionIndex: number) => {
         setSelectedAnswers(prev => ({ ...prev, [currentQuestionIndex]: optionIndex }));
     };

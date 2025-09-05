@@ -12,33 +12,25 @@ import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
 import type { Subject, NavItem } from './types';
 import { 
-    CalculatorIcon, 
-    GlobeIcon,
-    PencilIcon,
-    BookmarkIcon,
+    CalculatorIcon,
     HomeIcon,
-    BookOpenIcon,
     QuestionMarkCircleIcon,
     LightBulbIcon,
-    GridIcon,
-    ScaleIcon,
-    BarChartIcon,
-    CompassIcon,
-    GraduationCapIcon,
     CalendarIcon
 } from './components/icons';
 
 const subjects: Subject[] = [
-    { name: 'الرياضيات', icon: <CalculatorIcon />, color: 'bg-gradient-to-br from-red-500 to-rose-500', cardColor: 'bg-red-50' },
-    { name: 'التاريخ والجغرافيا', icon: <CompassIcon />, color: 'bg-gradient-to-br from-orange-400 to-amber-500', cardColor: 'bg-orange-50' },
-    { name: 'الإقتصاد', icon: <BarChartIcon />, color: 'bg-gradient-to-br from-green-400 to-emerald-500', cardColor: 'bg-green-50' },
-    { name: 'اللغة العربية', icon: <PencilIcon />, color: 'bg-gradient-to-br from-blue-500 to-sky-500', cardColor: 'bg-blue-50' },
-    { name: 'اللغة الفرنسية', icon: <BookmarkIcon />, color: 'bg-gradient-to-br from-pink-400 to-fuchsia-500', cardColor: 'bg-pink-50' },
-    { name: 'اللغة الأمازيغية', icon: <GridIcon />, color: 'bg-gradient-to-br from-purple-500 to-violet-600', cardColor: 'bg-purple-50' },
-    { name: 'اللغة الإنجليزية', icon: <GlobeIcon />, color: 'bg-gradient-to-br from-cyan-400 to-teal-500', cardColor: 'bg-cyan-50' },
-    { name: 'العلوم الإسلامية', icon: <BookOpenIcon />, color: 'bg-gradient-to-br from-teal-400 to-cyan-500', cardColor: 'bg-teal-50' },
-    { name: 'الفلسفة', icon: <LightBulbIcon />, color: 'bg-gradient-to-br from-indigo-500 to-violet-500', cardColor: 'bg-indigo-50' },
-    { name: 'القانون', icon: <ScaleIcon />, color: 'bg-gradient-to-br from-yellow-400 to-lime-500', cardColor: 'bg-yellow-50' },
+    { name: 'التسيير المحاسبي و المالي', icon: <img src="https://c.top4top.io/p_35341ttc48.png" alt="Accounting Management Icon" />, color: 'bg-gradient-to-br from-gray-500 to-slate-600', cardColor: 'bg-gray-50' },
+    { name: 'الإقتصاد', icon: <img src="https://b.top4top.io/p_3534k7msv7.png" alt="Economics Icon" />, color: 'bg-gradient-to-br from-green-400 to-emerald-500', cardColor: 'bg-green-50' },
+    { name: 'الرياضيات', icon: <img src="https://a.top4top.io/p_35343qio26.png" alt="Mathematics Icon" />, color: 'bg-gradient-to-br from-red-500 to-rose-500', cardColor: 'bg-red-50' },
+    { name: 'التاريخ والجغرافيا', icon: <img src="https://l.top4top.io/p_353431jcj5.png" alt="History and Geography Icon" />, color: 'bg-gradient-to-br from-orange-400 to-amber-500', cardColor: 'bg-orange-50' },
+    { name: 'اللغة العربية', icon: <img src="https://k.top4top.io/p_3534fo0f84.png" alt="Arabic Language Icon" />, color: 'bg-gradient-to-br from-blue-500 to-sky-500', cardColor: 'bg-blue-50' },
+    { name: 'اللغة الفرنسية', icon: <img src="https://j.top4top.io/p_35341p47x3.png" alt="French Language Icon" />, color: 'bg-gradient-to-br from-pink-400 to-fuchsia-500', cardColor: 'bg-pink-50' },
+    { name: 'اللغة الأمازيغية', icon: <img src="https://d.top4top.io/p_3534ip98q0.png" alt="Amazigh Language Icon" />, color: 'bg-gradient-to-br from-purple-500 to-violet-600', cardColor: 'bg-purple-50' },
+    { name: 'اللغة الإنجليزية', icon: <img src="https://i.top4top.io/p_35340kf4o2.png" alt="English Language Icon" />, color: 'bg-gradient-to-br from-cyan-400 to-teal-500', cardColor: 'bg-cyan-50' },
+    { name: 'العلوم الإسلامية', icon: <img src="https://g.top4top.io/p_3534p35wn0.png" alt="Islamic Sciences Icon" />, color: 'bg-gradient-to-br from-teal-400 to-cyan-500', cardColor: 'bg-teal-50' },
+    { name: 'الفلسفة', icon: <img src="https://h.top4top.io/p_35344ctyu1.png" alt="Philosophy Icon" />, color: 'bg-gradient-to-br from-indigo-500 to-violet-500', cardColor: 'bg-indigo-50' },
+    { name: 'القانون', icon: <img src="https://c.top4top.io/p_35342maiw0.png" alt="Law Icon" />, color: 'bg-gradient-to-br from-stone-500 to-stone-700', cardColor: 'bg-stone-50' },
 ];
 
 const navItems: NavItem[] = [

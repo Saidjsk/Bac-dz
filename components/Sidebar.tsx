@@ -77,8 +77,11 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, subjects, selectedSu
                     }}
                     className={`flex items-center gap-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 border-r-4 transition-colors ${isActive ? 'bg-blue-50 dark:bg-gray-700/50 font-bold border-blue-500' : 'border-transparent hover:bg-gray-100 dark:hover:bg-gray-700'}`}
                   >
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${subject.color} shadow-sm`}>
-                        {React.cloneElement(subject.icon, { className: 'w-5 h-5 text-white' })}
+                    <div className="relative w-14 h-14 flex-shrink-0">
+                        <div className={`animate-subtle-glow absolute -inset-1.5 ${subject.color} rounded-full blur-xl opacity-60 transition-all duration-300`}></div>
+                        <div className={`relative w-full h-full rounded-2xl flex items-center justify-center bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl border border-white/70 dark:border-gray-500/50 shadow-xl`}>
+                            {React.cloneElement(subject.icon, { className: 'w-9 h-9 object-contain' })}
+                        </div>
                     </div>
                     <span className="font-semibold">{subject.name}</span>
                   </a>
