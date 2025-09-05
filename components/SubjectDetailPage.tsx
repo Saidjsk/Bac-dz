@@ -4,6 +4,8 @@ import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, Spar
 import EconomicsLessons from './EconomicsLessons';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
+import { accountingTopics } from '../data/accountingTopics';
+import PDFDisplay from './PDFDisplay';
 
 interface ProgressData {
     viewedLessons: { [subject: string]: number[] };
@@ -23,7 +25,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     const [viewingYear, setViewingYear] = useState<number | null>(null);
     const [topicView, setTopicView] = useState<'topic' | 'correction'>('topic');
     const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
-    const years = [2024, 2023, 2022, 2021, 2020, 2018, 2017, 2016, 2015, 2014, 2013];
+    const years = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013];
     const [progress, setProgress] = useState<ProgressData>({ viewedLessons: {}, completedQuizzes: {} });
 
     const touchStartX = useRef(0);
@@ -108,10 +110,16 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     }, [viewingYear, activeQuiz, topicView, onViewLesson, subject.name]);
 
     const hasContent = (year: number) => {
+        if (subject.name === 'التسيير المحاسبي و المالي') {
+            return !!accountingTopics[year]?.exam;
+        }
         return false;
     }
     
     const hasCorrection = (year: number) => {
+        if (subject.name === 'التسيير المحاسبي و المالي') {
+            return !!accountingTopics[year]?.solution;
+        }
         return false;
     };
 
@@ -122,9 +130,19 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         }
     };
     
-    const renderLessonContent = () => null;
+    const renderLessonContent = () => {
+        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear && accountingTopics[viewingYear]?.exam) {
+            return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={accountingTopics[viewingYear].exam} />;
+        }
+        return null;
+    }
 
-    const renderCorrectionContent = () => null;
+    const renderCorrectionContent = () => {
+         if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear && accountingTopics[viewingYear]?.solution) {
+            return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={accountingTopics[viewingYear].solution} />;
+        }
+        return null;
+    }
 
     const activeTabIndex = TABS.indexOf(activeTab);
 
@@ -194,16 +212,16 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                                 }`}
                                 aria-current={topicView === 'topic'}
                             >
-                                الموضوع
+                                المواضيع
                             </button>
                             <button
                                 onClick={() => setTopicView('correction')}
                                 className={`relative z-10 w-1/2 py-2.5 text-center rounded-full font-bold transition-colors duration-300 ${
-                                    topicView === 'correction' ? 'text-white' : 'text-gray-600 dark:text-gray-300'
+                                    topicView === 'correction' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-gray-300'
                                 }`}
                                 aria-current={topicView === 'correction'}
                             >
-                                الحل
+                                الحلول
                             </button>
                         </div>
                     </div>

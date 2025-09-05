@@ -123,7 +123,7 @@ export const GridIcon: React.FC<IconProps> = ({ className }) => (
 
 export const ScaleIcon: React.FC<IconProps> = ({ className }) => (
     <svg className={className} viewBox="0 0 20 20" fill="currentColor">
-        <path d="M3 17.5V19h14v-1.5a.5.5 0 00-.5-.5h-13a.5.5 0 00-.5.5zM4 16h12V5H4v11zM3 4.5V3h14v1.5a.5.5 0 01-.5.5h-13a.5.5 0 01-.5-.5z"/>
+        <path d="M3 17.5V19h14v-1.5a.5.5 0 00-.5-.5h-13a.5.5 0 00-.5.5zM4 16h12V5H4v11zM3 4.5V3h14v1.5a.5.5 0 01-.5-.5h-13a.5.5 0 01-.5-.5z"/>
     </svg>
 );
 
@@ -213,4 +213,10 @@ export const MathToolsIcon: React.FC<IconProps> = ({ className }) => (
     <svg className={className} fill="currentColor" viewBox="0 0 20 20">
         <path d="M3 3a2 2 0 00-2 2v10a2 2 0 002 2h14a2 2 0 002-2V5a2 2 0 00-2-2H3zm12 4a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1V8a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H9a1 1 0 01-1-1V8a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H5a1 1 0 01-1-1V8a1 1 0 011-1h2zm10 4a1 1 0 011 1v1a1 1 0 01-1 1h-2a1 1 0 01-1-1v-1a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H9a1 1 0 01-1-1v-1a1 1 0 011-1h2zm-4 0a1 1 0 011 1v1a1 1 0 01-1 1H5a1 1 0 01-1-1v-1a1 1 0 011-1h2z" />
     </svg>
+);
+
+export const ExternalLinkIcon: React.FC<IconProps> = ({ className }) => (
+  <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+  </svg>
 );
