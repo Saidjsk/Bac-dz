@@ -1,14 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Subject, Quiz } from '../types';
 import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon, GraduationCapIcon } from './icons';
-import Economics2013Lesson from './Economics2013Lesson';
 import EconomicsLessons from './EconomicsLessons';
-import Accounting2021Lesson from './Accounting2021Lesson';
-import Accounting2020Lesson from './Accounting2020Lesson';
-import Accounting2022Lesson from './Accounting2022Lesson';
-import Accounting2023Lesson from './Accounting2023Lesson';
-import Accounting2024Lesson from './Accounting2024Lesson';
-import Accounting2020Correction from './Accounting2020Correction';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
 
@@ -115,19 +108,10 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     }, [viewingYear, activeQuiz, topicView, onViewLesson, subject.name]);
 
     const hasContent = (year: number) => {
-        if (subject.name === 'الإقتصاد' && year === 2013) {
-            return true;
-        }
-        if (subject.name === 'التسيير المحاسبي و المالي' && (year === 2024 || year === 2023 || year === 2022 || year === 2021 || year === 2020)) {
-            return true;
-        }
         return false;
     }
     
     const hasCorrection = (year: number) => {
-        if (subject.name === 'التسيير المحاسبي و المالي' && year === 2020) {
-            return true;
-        }
         return false;
     };
 
@@ -138,37 +122,9 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         }
     };
     
-    const renderLessonContent = () => {
-        if (viewingYear === null) return null;
+    const renderLessonContent = () => null;
 
-        if (subject.name === 'الإقتصاد' && viewingYear === 2013) {
-            return <Economics2013Lesson />;
-        }
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2024) {
-            return <Accounting2024Lesson />;
-        }
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2023) {
-            return <Accounting2023Lesson />;
-        }
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2022) {
-            return <Accounting2022Lesson />;
-        }
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2021) {
-            return <Accounting2021Lesson />;
-        }
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2020) {
-            return <Accounting2020Lesson />;
-        }
-        return null;
-    };
-
-    const renderCorrectionContent = () => {
-        if (viewingYear === null) return null;
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2020) {
-            return <Accounting2020Correction />;
-        }
-        return null;
-    };
+    const renderCorrectionContent = () => null;
 
     const activeTabIndex = TABS.indexOf(activeTab);
 
