@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Subject, Quiz } from '../types';
-import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon } from './icons';
+import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon, GraduationCapIcon } from './icons';
 import Economics2013Lesson from './Economics2013Lesson';
 import EconomicsLessons from './EconomicsLessons';
 import Accounting2021Lesson from './Accounting2021Lesson';
@@ -8,6 +8,7 @@ import Accounting2020Lesson from './Accounting2020Lesson';
 import Accounting2022Lesson from './Accounting2022Lesson';
 import Accounting2023Lesson from './Accounting2023Lesson';
 import Accounting2024Lesson from './Accounting2024Lesson';
+import Accounting2020Correction from './Accounting2020Correction';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
 
@@ -27,6 +28,7 @@ type Tab = typeof TABS[number];
 const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLesson }) => {
     const [activeTab, setActiveTab] = useState<Tab>('topics');
     const [viewingYear, setViewingYear] = useState<number | null>(null);
+    const [topicView, setTopicView] = useState<'topic' | 'correction'>('topic');
     const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
     const years = [2024, 2023, 2022, 2021, 2020, 2018, 2017, 2016, 2015, 2014, 2013];
     const [progress, setProgress] = useState<ProgressData>({ viewedLessons: {}, completedQuizzes: {} });
@@ -107,10 +109,10 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     useEffect(() => {
         const isViewing = viewingYear !== null || activeQuiz !== null;
         onViewLesson(isViewing);
-        if (viewingYear !== null) {
+        if (viewingYear !== null && topicView === 'topic') {
             markLessonAsViewed(subject.name, viewingYear);
         }
-    }, [viewingYear, activeQuiz, onViewLesson, subject.name]);
+    }, [viewingYear, activeQuiz, topicView, onViewLesson, subject.name]);
 
     const hasContent = (year: number) => {
         if (subject.name === 'الإقتصاد' && year === 2013) {
@@ -121,14 +123,22 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         }
         return false;
     }
+    
+    const hasCorrection = (year: number) => {
+        if (subject.name === 'التسيير المحاسبي و المالي' && year === 2020) {
+            return true;
+        }
+        return false;
+    };
 
     const handleYearClick = (year: number) => {
         if (hasContent(year)) {
             setViewingYear(year);
+            setTopicView('topic');
         }
     };
-
-    const renderContent = () => {
+    
+    const renderLessonContent = () => {
         if (viewingYear === null) return null;
 
         if (subject.name === 'الإقتصاد' && viewingYear === 2013) {
@@ -148,6 +158,14 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         }
         if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2020) {
             return <Accounting2020Lesson />;
+        }
+        return null;
+    };
+
+    const renderCorrectionContent = () => {
+        if (viewingYear === null) return null;
+        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2020) {
+            return <Accounting2020Correction />;
         }
         return null;
     };
@@ -180,7 +198,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         touchStartX.current = 0;
         touchMoveX.current = 0;
     };
-
+    
     if (activeQuiz) {
         return (
             <QuizPage
@@ -194,17 +212,37 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     if (viewingYear !== null) {
         return (
             <div className="bg-gray-50 dark:bg-gray-900 h-full flex flex-col relative">
-                <header className="flex items-center gap-4 p-4 pb-4 border-b dark:border-gray-700 sticky top-0 bg-gray-50 dark:bg-gray-900 z-10">
+                <header className="flex items-center gap-4 p-4 pb-4 border-b dark:border-gray-700 sticky top-0 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm z-10">
                     <button onClick={() => setViewingYear(null)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Go back">
                         <BackArrowIcon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
                     </button>
                     <div>
-                        <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200">{subject.name}</h2>
-                        <p className="text-gray-500 dark:text-gray-400">محتوى بكالوريا {viewingYear}</p>
+                        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">{subject.name}</h2>
+                        <p className="text-gray-500 dark:text-gray-400">بكالوريا {viewingYear}</p>
                     </div>
                 </header>
+
+                {hasCorrection(viewingYear) && (
+                     <div className="flex justify-center border-b border-gray-200 dark:border-gray-700 sticky top-[73px] bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm z-10">
+                        <button 
+                            onClick={() => setTopicView('topic')}
+                            className={`px-6 py-3 font-bold text-center border-b-2 transition-colors duration-300 ${topicView === 'topic' ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
+                            aria-current={topicView === 'topic'}
+                        >
+                            الموضوع
+                        </button>
+                        <button
+                            onClick={() => setTopicView('correction')}
+                            className={`px-6 py-3 font-bold text-center border-b-2 transition-colors duration-300 ${topicView === 'correction' ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400' : 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}`}
+                            aria-current={topicView === 'correction'}
+                        >
+                            الحل
+                        </button>
+                    </div>
+                )}
+
                 <div className="flex-grow overflow-y-auto animate-slide-up">
-                    {renderContent()}
+                    {topicView === 'topic' ? renderLessonContent() : renderCorrectionContent()}
                 </div>
             </div>
         );
@@ -307,6 +345,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                             {years.map(year => {
                                 const isAvailable = hasContent(year);
                                 const isViewed = isLessonViewed(subject.name, year);
+                                const isCorrectionAvailable = hasCorrection(year);
                                 const topBarColorClass = isViewed 
                                     ? 'bg-green-400 dark:bg-green-600' 
                                     : isAvailable 
@@ -327,6 +366,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                                         `}
                                     >
                                         {isViewed && <CheckCircleIcon className="w-6 h-6 text-green-500 absolute top-2 right-2 animate-scale-in" />}
+                                        {isCorrectionAvailable && !isViewed && <GraduationCapIcon className="w-5 h-5 text-emerald-500 absolute top-2 left-2 animate-scale-in opacity-70" title="الإجابة النموذجية متوفرة" />}
                                         <div className={`absolute top-0 left-0 right-0 h-1.5 ${topBarColorClass} rounded-t-xl`}></div>
                                         <p className="text-3xl font-bold text-gray-800 dark:text-gray-200 mt-4">{year}</p>
                                         <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{isAvailable ? 'بكالوريا' : 'قريبا'}</p>

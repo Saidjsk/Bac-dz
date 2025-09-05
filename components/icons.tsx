@@ -1,7 +1,9 @@
 import React from 'react';
 
+// FIX: Add optional title prop to allow for tooltips on icons.
 interface IconProps {
   className?: string;
+  title?: string;
 }
 
 export const HamburgerIcon: React.FC<IconProps> = ({ className }) => (
@@ -186,8 +188,10 @@ export const TrashIcon: React.FC<IconProps> = ({ className }) => (
     </svg>
 );
 
-export const GraduationCapIcon: React.FC<IconProps> = ({ className }) => (
+// FIX: Updated GraduationCapIcon to accept and render a title prop for accessibility.
+export const GraduationCapIcon: React.FC<IconProps> = ({ className, title }) => (
     <svg className={className} viewBox="0 0 20 20" fill="currentColor">
+        {title && <title>{title}</title>}
         <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 011.056 0l4-1.822a1 1 0 000-1.84l-4-1.822zM10 12.363l-7-3.182v5.405a1 1 0 001 1h12a1 1 0 001-1v-5.405l-7 3.182zM5.25 10.051l4 1.822a1 1 0 00.992 0l4-1.822v.97l-4 1.822a1 1 0 01-.992 0l-4-1.822v-.97z" />
     </svg>
 );
