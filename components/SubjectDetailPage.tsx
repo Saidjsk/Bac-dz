@@ -3,6 +3,7 @@ import type { Subject, Quiz } from '../types';
 import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon } from './icons';
 import Economics2013Lesson from './Economics2013Lesson';
 import EconomicsLessons from './EconomicsLessons';
+import Accounting2021Lesson from './Accounting2021Lesson';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
 
@@ -23,7 +24,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     const [activeTab, setActiveTab] = useState<Tab>('topics');
     const [viewingYear, setViewingYear] = useState<number | null>(null);
     const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
-    const years = [2013, 2014, 2015, 2016, 2017, 2018];
+    const years = [2021, 2018, 2017, 2016, 2015, 2014, 2013];
     const [progress, setProgress] = useState<ProgressData>({ viewedLessons: {}, completedQuizzes: {} });
 
     const touchStartX = useRef(0);
@@ -108,7 +109,13 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     }, [viewingYear, activeQuiz, onViewLesson, subject.name]);
 
     const hasContent = (year: number) => {
-        return subject.name === 'الإقتصاد' && year === 2013;
+        if (subject.name === 'الإقتصاد' && year === 2013) {
+            return true;
+        }
+        if (subject.name === 'التسيير المحاسبي و المالي' && year === 2021) {
+            return true;
+        }
+        return false;
     }
 
     const handleYearClick = (year: number) => {
@@ -118,8 +125,13 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     };
 
     const renderContent = () => {
-        if (hasContent(viewingYear as number)) {
+        if (viewingYear === null) return null;
+
+        if (subject.name === 'الإقتصاد' && viewingYear === 2013) {
             return <Economics2013Lesson />;
+        }
+        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear === 2021) {
+            return <Accounting2021Lesson />;
         }
         return null;
     };
@@ -321,7 +333,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                         )}
                     </div>
                     <div className="w-full flex-shrink-0 h-full overflow-y-auto">
-                        {subject.name === 'الإقتصاد' && subjectQuizzes.length > 0 ? (
+                        {subjectQuizzes.length > 0 ? (
                              <section className="space-y-4">
                                 {subjectQuizzes.map(quiz => {
                                     const isCompleted = isQuizCompleted(quiz.id);
