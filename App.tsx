@@ -10,6 +10,7 @@ import TipsPage from './components/TipsPage';
 import DailyGoal from './components/DailyGoal';
 import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
+import WelcomeModal from './components/WelcomeModal'; // Import WelcomeModal
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon,
@@ -47,6 +48,7 @@ const App: React.FC = () => {
     const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
     const [isViewingLesson, setIsViewingLesson] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [showWelcomeModal, setShowWelcomeModal] = useState(false); // Add welcome modal state
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
         if (typeof window !== 'undefined' && localStorage.getItem('theme')) {
             return localStorage.getItem('theme') as 'light' | 'dark';
@@ -56,6 +58,14 @@ const App: React.FC = () => {
         }
         return 'light';
     });
+    
+    // Effect for showing the welcome modal on first visit
+    useEffect(() => {
+        const hasVisited = localStorage.getItem('hasVisitedBacPrepApp');
+        if (!hasVisited) {
+            setShowWelcomeModal(true);
+        }
+    }, []);
 
     useEffect(() => {
         if (theme === 'dark') {
@@ -66,6 +76,11 @@ const App: React.FC = () => {
             localStorage.setItem('theme', 'light');
         }
     }, [theme]);
+    
+    const handleCloseWelcomeModal = () => {
+        localStorage.setItem('hasVisitedBacPrepApp', 'true');
+        setShowWelcomeModal(false);
+    };
 
     const toggleSidebar = () => setIsSidebarOpen(p => !p);
 
@@ -154,6 +169,7 @@ const App: React.FC = () => {
 
     return (
         <div className="max-w-md mx-auto min-h-screen font-sans flex flex-col shadow-2xl">
+            <WelcomeModal isOpen={showWelcomeModal} onClose={handleCloseWelcomeModal} />
             <Sidebar 
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
