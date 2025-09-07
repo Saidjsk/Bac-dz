@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { GraduationCapIcon, ClockIcon, BookOpenIcon, CalculatorIcon, SparklesIcon } from './icons';
+import { ClockIcon, BookOpenIcon, CalculatorIcon, SparklesIcon } from './icons';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -10,17 +10,29 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
 
   const steps = [
     {
-      icon: <GraduationCapIcon className="h-24 w-24 text-white" />,
+      icon: (
+        <video 
+          src="https://j.top4top.io/m_3536t9j002.mp4" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-48 h-48 object-cover rounded-2xl shadow-lg"
+        />
+      ),
       title: 'مرحباً بك في رفيق البكالوريا',
       description: 'كل ما تحتاجه للتحضير والمراجعة في مكان واحد. لنبدأ رحلة النجاح معاً.',
     },
     {
       icon: (
-        <div className="grid grid-cols-3 gap-4 text-white p-4">
-            <ClockIcon className="w-12 h-12 opacity-80" />
-            <BookOpenIcon className="w-12 h-12" />
-            <CalculatorIcon className="w-12 h-12 opacity-80" />
-        </div>
+        <video
+          src="https://c.top4top.io/m_3536ptx3b0.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-48 h-48 object-cover rounded-2xl shadow-lg"
+        />
       ),
       title: 'أدواتك نحو التفوق',
       description: 'تابع العد التنازلي، تصفح المواد، احسب معدلك، واستفد من نصائحنا القيمة.',
@@ -43,12 +55,17 @@ const Onboarding: React.FC<OnboardingProps> = ({ onComplete }) => {
   return (
     <div className="fixed inset-0 z-50 flex flex-col justify-between p-8 bg-gradient-to-br from-blue-600 to-indigo-700 text-white animate-fade-in" dir="rtl">
       <div className="flex-grow flex flex-col items-center justify-center text-center">
-        <div className="mb-10 w-40 h-40 rounded-full bg-white/20 flex items-center justify-center animate-pulse-glow">
-            {/* The content will be keyed to re-trigger animation on step change */}
-            <div key={step} className="animate-scale-in">
+        {step === 3 ? (
+             <div className="mb-10 w-40 h-40 rounded-full bg-white/20 flex items-center justify-center animate-pulse-glow">
+                <div key={step} className="animate-scale-in">
+                    {currentStepData.icon}
+                </div>
+            </div>
+        ) : (
+            <div key={step} className="mb-10 animate-scale-in">
                 {currentStepData.icon}
             </div>
-        </div>
+        )}
         <div key={step+10}>
             <h2 className="text-3xl font-extrabold mb-4 animate-slide-up" style={{ animationDelay: '100ms' }}>
               {currentStepData.title}

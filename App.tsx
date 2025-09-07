@@ -15,10 +15,10 @@ import Onboarding from './components/Onboarding'; // Import Onboarding
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon,
-    HomeIcon,
     QuestionMarkCircleIcon,
     LightBulbIcon,
-    CalendarIcon
+    CalendarIcon,
+    HomeIcon
 } from './components/icons';
 import SubjectDetailPage from './components/SubjectDetailPage';
 
