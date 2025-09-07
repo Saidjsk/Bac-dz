@@ -12,10 +12,12 @@ const StudyPlanGenerator: React.FC = () => {
             const savedPlan = localStorage.getItem('studyPlan');
             const savedProgress = localStorage.getItem('studyPlanProgress');
             if (savedPlan) {
-                setPlan(JSON.parse(savedPlan));
+                const parsedPlan = JSON.parse(savedPlan);
+                if(parsedPlan) setPlan(parsedPlan);
             }
             if (savedProgress) {
-                setProgress(JSON.parse(savedProgress));
+                const parsedProgress = JSON.parse(savedProgress);
+                if(parsedProgress) setProgress(parsedProgress);
             }
         } catch (e) {
             console.error('Failed to load study plan from localStorage', e);
@@ -81,7 +83,7 @@ const StudyPlanGenerator: React.FC = () => {
             const newPlan = [...plan];
             newPlan[dayIndex].tasks.splice(taskIndex, 1);
             
-            const newProgress = { ...progress };
+            const newProgress = { ...(progress || {}) };
             if (newProgress[dayIndex]) {
                 newProgress[dayIndex] = newProgress[dayIndex]
                     .filter(i => i !== taskIndex)
@@ -93,7 +95,7 @@ const StudyPlanGenerator: React.FC = () => {
     }
 
     const handleTaskToggle = (dayIndex: number, taskIndex: number) => {
-        const newProgress = { ...progress };
+        const newProgress = { ...(progress || {}) };
         const dayProgress = newProgress[dayIndex] || [];
 
         if (dayProgress.includes(taskIndex)) {
@@ -122,7 +124,7 @@ const StudyPlanGenerator: React.FC = () => {
     }
 
     const totalTasks = plan.reduce((acc, day) => acc + day.tasks.length, 0);
-    const completedTasks = Object.values(progress).reduce((acc, dayProgress) => acc + (dayProgress?.length || 0), 0);
+    const completedTasks = Object.values(progress || {}).reduce((acc, dayProgress) => acc + (dayProgress?.length || 0), 0);
     const overallProgress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
 
     return (

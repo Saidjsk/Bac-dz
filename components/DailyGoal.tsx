@@ -13,7 +13,7 @@ const DailyGoal: React.FC = () => {
             const savedGoal = localStorage.getItem('dailyGoal');
             if (savedGoal) {
                 const parsedGoal = JSON.parse(savedGoal);
-                if (parsedGoal.date === today) {
+                if (parsedGoal && parsedGoal.date === today) {
                     setGoal(parsedGoal);
                 } else {
                     localStorage.removeItem('dailyGoal'); // Stale goal

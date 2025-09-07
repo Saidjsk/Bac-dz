@@ -15,8 +15,13 @@ const QuizHub: React.FC = () => {
     const handleQuizCompleted = (quizId: string, score: number) => {
         try {
             const savedProgress = localStorage.getItem('bacPrepProgress');
-            const progress = savedProgress ? JSON.parse(savedProgress) : { viewedLessons: {}, completedQuizzes: {} };
-            progress.completedQuizzes[quizId] = score;
+            const progress = (savedProgress && JSON.parse(savedProgress)) || { viewedLessons: {}, completedQuizzes: {} };
+            
+            progress.completedQuizzes = {
+                ...(progress.completedQuizzes || {}),
+                [quizId]: score
+            };
+    
             localStorage.setItem('bacPrepProgress', JSON.stringify(progress));
         } catch (error) {
             console.error("Failed to save quiz progress from Hub", error);

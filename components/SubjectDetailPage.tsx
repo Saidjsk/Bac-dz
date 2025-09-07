@@ -8,6 +8,7 @@ import { economicsTopics } from '../data/economicsTopics';
 import { lawTopics } from '../data/lawTopics';
 import EconomicsLessons from './EconomicsLessons';
 import { Header } from './Header';
+import PDFDisplay from './PDFDisplay';
 
 interface ProgressData {
     viewedLessons: { [subject: string]: number[] };
@@ -40,10 +41,13 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
             const savedProgress = localStorage.getItem('bacPrepProgress');
             if (savedProgress) {
                 const parsed = JSON.parse(savedProgress);
-                 setProgress({
-                    viewedLessons: parsed.viewedLessons || {},
-                    completedQuizzes: parsed.completedQuizzes || {}
-                });
+                // Add a check to ensure parsed data is not null
+                if (parsed) {
+                    setProgress({
+                        viewedLessons: parsed.viewedLessons || {},
+                        completedQuizzes: parsed.completedQuizzes || {}
+                    });
+                }
             }
         } catch (error) {
             console.error("Failed to load progress from localStorage", error);
@@ -158,7 +162,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     if (viewingYear !== null) {
         const handleBackToSubject = () => {
             setViewingYear(null);
-        }
+        };
 
         let url = '';
         const hasSol = hasCorrection(viewingYear);
@@ -171,89 +175,58 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
             if (subject.name === 'الإقتصاد') url = economicsTopics[viewingYear]?.solution || '';
             if (subject.name === 'القانون') url = lawTopics[viewingYear]?.solution || '';
         }
+        const title = `${topicView === 'topic' ? 'موضوع' : 'حل'} ${subject.name} - ${viewingYear}`;
+        
+        const tabs = hasSol ? (
+            <div className="relative bg-gray-200 dark:bg-slate-800 p-1 rounded-full flex w-full max-w-xs mx-auto shadow-inner">
+                <div
+                    className="absolute top-1 bottom-1 right-1 w-[calc(50%-4px)] bg-white dark:bg-blue-600 rounded-full shadow-md transition-transform duration-300 ease-in-out"
+                    style={{ transform: topicView === 'topic' ? 'translateX(0%)' : 'translateX(-100%)' }}
+                />
+                <button 
+                    onClick={() => setTopicView('topic')}
+                    className={`relative z-10 w-1/2 py-2 text-center rounded-full font-bold transition-colors duration-300 ${topicView === 'topic' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-slate-300'}`}
+                    aria-current={topicView === 'topic'}
+                >
+                    المواضيع
+                </button>
+                <button
+                    onClick={() => setTopicView('correction')}
+                    className={`relative z-10 w-1/2 py-2 text-center rounded-full font-bold transition-colors duration-300 ${topicView === 'correction' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-slate-300'}`}
+                    aria-current={topicView === 'correction'}
+                >
+                    الحلول
+                </button>
+            </div>
+        ) : null;
+
 
         return (
-            <>
-                <Header
-                    onLeftButtonClick={handleBackToSubject}
-                    isHomePage={false}
-                    onThemeToggle={onThemeToggle}
-                    theme={theme}
-                />
-                <div className="p-4 flex flex-col h-full animate-fade-in">
-                    <nav aria-label="breadcrumb" className="text-sm text-gray-500 dark:text-gray-400 mb-4">
-                        <ol className="list-none p-0 inline-flex">
-                            <li className="flex items-center">
-                                <span className="cursor-default">الرئيسية</span>
-                            </li>
-                            <li className="flex items-center">
-                                <span className="mx-2">&gt;</span>
-                            </li>
-                            <li className="flex items-center">
-                                <button onClick={handleBackToSubject} className="hover:underline">{subject.name}</button>
-                            </li>
-                            <li className="flex items-center">
-                                <span className="mx-2">&gt;</span>
-                            </li>
-                            <li className="flex items-center" aria-current="page">
-                                <span className="font-semibold text-gray-700 dark:text-gray-300">{viewingYear}</span>
-                            </li>
-                        </ol>
-                    </nav>
-
-                    <h2 className="text-3xl font-extrabold text-gray-800 dark:text-gray-200 mb-1">{subject.name} - <span className="text-green-500">بكالوريا {viewingYear}</span></h2>
-                    <p className="text-gray-500 dark:text-gray-400 mt-1 mb-6">مواضيع وحلول بكالوريا {viewingYear} لمادة {subject.name}</p>
-
-                    {hasSol && (
-                        <div className="mb-6">
-                            <div className="relative bg-gray-200 dark:bg-slate-800 p-1 rounded-full flex w-full max-w-xs mx-auto shadow-inner">
-                                <div
-                                    className="absolute top-1 bottom-1 right-1 w-[calc(50%-4px)] bg-white dark:bg-blue-600 rounded-full shadow-md transition-transform duration-300 ease-in-out"
-                                    style={{
-                                        transform: topicView === 'topic' ? 'translateX(0%)' : 'translateX(-100%)',
-                                    }}
-                                />
-                                <button 
-                                    onClick={() => setTopicView('topic')}
-                                    className={`relative z-10 w-1/2 py-2 text-center rounded-full font-bold transition-colors duration-300 ${
-                                        topicView === 'topic' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-slate-300'
-                                    }`}
-                                    aria-current={topicView === 'topic'}
-                                >
-                                    المواضيع
-                                </button>
-                                <button
-                                    onClick={() => setTopicView('correction')}
-                                    className={`relative z-10 w-1/2 py-2 text-center rounded-full font-bold transition-colors duration-300 ${
-                                        topicView === 'correction' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-slate-300'
-                                    }`}
-                                    aria-current={topicView === 'correction'}
-                                >
-                                    الحلول
-                                </button>
+            <div className="flex flex-col h-screen bg-gray-100 dark:bg-slate-900">
+                <main className="flex-grow relative min-h-0">
+                    {url ? (
+                        <PDFDisplay 
+                            title={title} 
+                            url={url} 
+                            onBack={handleBackToSubject} 
+                        >
+                           {tabs}
+                        </PDFDisplay>
+                    ) : (
+                         <div className="flex flex-col items-center justify-center h-full text-center text-gray-500 p-4">
+                            <Header
+                                onLeftButtonClick={handleBackToSubject}
+                                isHomePage={false}
+                                onThemeToggle={onThemeToggle}
+                                theme={theme}
+                            />
+                            <div className="flex-grow flex items-center justify-center">
+                                 <p>عذراً، هذا المحتوى غير متوفر حالياً.</p>
                             </div>
                         </div>
                     )}
-                    
-                    <a 
-                        href={url} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="group bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-lg dark:hover:shadow-gray-700/50 transition-all duration-300 p-5 flex items-center gap-5 cursor-pointer hover:-translate-y-1 hover:ring-2 hover:ring-blue-500/50"
-                    >
-                        <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-blue-100 dark:bg-blue-900/50">
-                            <DocumentIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
-                        </div>
-                        <div className="flex-1">
-                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
-                                {topicView === 'topic' ? 'موضوع' : 'حل'} بكالوريا {viewingYear}
-                            </h3>
-                            <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">PDF • 2-3 MB</p>
-                        </div>
-                        <ExternalLinkIcon className="w-6 h-6 text-gray-400 dark:text-gray-500 transition-transform group-hover:text-blue-500" />
-                    </a>
-                </div>
-            </>
+                </main>
+            </div>
         );
     }
 
