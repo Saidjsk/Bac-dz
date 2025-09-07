@@ -4,6 +4,7 @@ export interface Subject {
   name: string;
   // FIX: Specify that the icon element can accept a className prop to resolve React.cloneElement type errors.
   icon: React.ReactElement<{ className?: string }>;
+  iconDark?: React.ReactElement<{ className?: string }>;
   color: string;
   cardColor: string;
 }

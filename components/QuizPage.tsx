@@ -96,7 +96,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quiz, onBack, onComplete }) => {
     const handleSubmit = () => {
         let calculatedScore = 0;
         quiz.questions.forEach((q, index) => {
-            if (selectedAnswers[index] === q.correctAnswerIndex) {
+            if (selectedAnswers[index] === q?.correctAnswerIndex) {
                 calculatedScore++;
             }
         });
@@ -139,7 +139,7 @@ const QuizPage: React.FC<QuizPageProps> = ({ quiz, onBack, onComplete }) => {
 
                      <div className="space-y-3">
                         <h4 className="font-bold text-xl text-slate-800 dark:text-slate-200 mb-2">مراجعة الإجابات:</h4>
-                        {quiz.questions.map((q, index) => {
+                        {quiz.questions.filter(Boolean).map((q, index) => {
                             const userAnswer = selectedAnswers[index];
                             const isCorrect = userAnswer === q.correctAnswerIndex;
                             const isAccordionOpen = openAccordionIndex === index;
@@ -213,6 +213,26 @@ const QuizPage: React.FC<QuizPageProps> = ({ quiz, onBack, onComplete }) => {
     }
 
     const currentQuestion = quiz.questions[currentQuestionIndex];
+
+    // Safeguard against corrupted data (e.g., null entry in questions array)
+    if (!currentQuestion) {
+        return (
+            <div className="bg-slate-50 dark:bg-slate-900 h-full flex flex-col font-sans">
+                <header className="flex items-center gap-4 p-4 border-b border-slate-200 dark:border-slate-700 sticky top-0 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-sm z-10">
+                    <button onClick={onBack} className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" aria-label="Back to subject">
+                        <BackArrowIcon className="w-6 h-6 text-slate-700 dark:text-slate-300" />
+                    </button>
+                    <div>
+                        <h2 className="text-xl font-bold text-slate-800 dark:text-slate-100">خطأ في تحميل السؤال</h2>
+                        {quiz && <p className="text-sm text-slate-500 dark:text-slate-400">{quiz.title}</p>}
+                    </div>
+                </header>
+                <main className="flex-grow flex items-center justify-center text-center p-4">
+                    <p className="text-slate-600 dark:text-slate-400">عذراً، لم نتمكن من تحميل السؤال الحالي. يرجى العودة والمحاولة مرة أخرى.</p>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="bg-slate-50 dark:bg-slate-900 h-full flex flex-col font-sans">

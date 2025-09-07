@@ -27,13 +27,21 @@ const StudyPlanGenerator: React.FC = () => {
     const savePlanAndProgress = (newPlan: DailyStudyPlan[], newProgress: StudyPlanProgress) => {
         setPlan(newPlan);
         setProgress(newProgress);
-        localStorage.setItem('studyPlan', JSON.stringify(newPlan));
-        localStorage.setItem('studyPlanProgress', JSON.stringify(newProgress));
+        try {
+            localStorage.setItem('studyPlan', JSON.stringify(newPlan));
+            localStorage.setItem('studyPlanProgress', JSON.stringify(newProgress));
+        } catch (e) {
+            console.error("Failed to save plan and progress to localStorage", e);
+        }
     };
     
      const saveProgress = (newProgress: StudyPlanProgress) => {
         setProgress(newProgress);
-        localStorage.setItem('studyPlanProgress', JSON.stringify(newProgress));
+        try {
+            localStorage.setItem('studyPlanProgress', JSON.stringify(newProgress));
+        } catch (e) {
+            console.error("Failed to save progress to localStorage", e);
+        }
     };
 
     const handleCreatePlan = () => {
@@ -44,8 +52,12 @@ const StudyPlanGenerator: React.FC = () => {
     const handleClearPlan = () => {
         setPlan(null);
         setProgress({});
-        localStorage.removeItem('studyPlan');
-        localStorage.removeItem('studyPlanProgress');
+        try {
+            localStorage.removeItem('studyPlan');
+            localStorage.removeItem('studyPlanProgress');
+        } catch (e) {
+            console.error("Failed to clear plan from localStorage", e);
+        }
     };
 
     const handleAddDay = () => {

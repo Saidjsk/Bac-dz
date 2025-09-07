@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { Subject, Quiz } from '../types';
-import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon, GraduationCapIcon } from './icons';
-import EconomicsLessons from './EconomicsLessons';
+import { DocumentIcon, BookOpenIcon, BackArrowIcon, QuestionMarkCircleIcon, SparklesIcon, CheckCircleIcon, ChevronDownIcon, GraduationCapIcon, ExternalLinkIcon } from './icons';
 import QuizPage from './QuizPage';
 import { quizzesBySubject } from '../data/quizzes';
 import { accountingTopics } from '../data/accountingTopics';
 import { economicsTopics } from '../data/economicsTopics';
 import { lawTopics } from '../data/lawTopics';
-import PDFDisplay from './PDFDisplay';
+import EconomicsLessons from './EconomicsLessons';
+import { Header } from './Header';
 
 interface ProgressData {
     viewedLessons: { [subject: string]: number[] };
@@ -17,21 +17,20 @@ interface ProgressData {
 interface SubjectDetailPageProps {
     subject: Subject;
     onViewLesson: (isViewing: boolean) => void;
+    theme: 'light' | 'dark';
+    onThemeToggle: () => void;
 }
 
 const TABS = ['topics', 'lessons', 'quizzes'] as const;
 type Tab = typeof TABS[number];
 
-const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLesson }) => {
+const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLesson, theme, onThemeToggle }) => {
     const [activeTab, setActiveTab] = useState<Tab>('topics');
     const [viewingYear, setViewingYear] = useState<number | null>(null);
     const [topicView, setTopicView] = useState<'topic' | 'correction'>('topic');
     const [activeQuiz, setActiveQuiz] = useState<Quiz | null>(null);
     const years = [2024, 2023, 2022, 2021, 2020, 2019, 2018, 2017, 2016, 2015, 2014, 2013];
     const [progress, setProgress] = useState<ProgressData>({ viewedLessons: {}, completedQuizzes: {} });
-
-    const touchStartX = useRef(0);
-    const touchMoveX = useRef(0);
 
     const subjectQuizzes = quizzesBySubject[subject.name] || [];
 
@@ -112,7 +111,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     }, [viewingYear, activeQuiz, topicView, onViewLesson, subject.name]);
 
     const hasContent = (year: number) => {
-        if (subject.name === 'التسيير المحاسبي و المالي') {
+        if (subject.name === 'المحاسبة') {
             return !!accountingTopics[year]?.exam;
         }
         if (subject.name === 'الإقتصاد') {
@@ -125,7 +124,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     }
     
     const hasCorrection = (year: number) => {
-        if (subject.name === 'التسيير المحاسبي و المالي') {
+        if (subject.name === 'المحاسبة') {
             return !!accountingTopics[year]?.solution;
         }
         if (subject.name === 'الإقتصاد') {
@@ -143,61 +142,8 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
             setTopicView('topic');
         }
     };
-    
-    const renderLessonContent = () => {
-        if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear && accountingTopics[viewingYear]?.exam) {
-            return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={accountingTopics[viewingYear].exam} />;
-        }
-        if (subject.name === 'الإقتصاد' && viewingYear && economicsTopics[viewingYear]?.exam) {
-            return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={economicsTopics[viewingYear].exam} />;
-        }
-        if (subject.name === 'القانون' && viewingYear && lawTopics[viewingYear]?.exam) {
-            return <PDFDisplay title={`موضوع بكالوريا ${viewingYear}`} url={lawTopics[viewingYear].exam} />;
-        }
-        return null;
-    }
-
-    const renderCorrectionContent = () => {
-         if (subject.name === 'التسيير المحاسبي و المالي' && viewingYear && accountingTopics[viewingYear]?.solution) {
-            return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={accountingTopics[viewingYear].solution} />;
-        }
-        if (subject.name === 'الإقتصاد' && viewingYear && economicsTopics[viewingYear]?.solution) {
-            return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={economicsTopics[viewingYear].solution} />;
-        }
-        if (subject.name === 'القانون' && viewingYear && lawTopics[viewingYear]?.solution) {
-            return <PDFDisplay title={`حل بكالوريا ${viewingYear}`} url={lawTopics[viewingYear].solution} />;
-        }
-        return null;
-    }
 
     const activeTabIndex = TABS.indexOf(activeTab);
-
-    const handleTouchStart = (e: React.TouchEvent) => {
-        if (e.targetTouches.length === 0) return;
-        touchStartX.current = e.targetTouches[0].clientX;
-        touchMoveX.current = e.targetTouches[0].clientX; // Initialize moveX
-    };
-
-    const handleTouchMove = (e: React.TouchEvent) => {
-        if (e.targetTouches.length === 0) return;
-        touchMoveX.current = e.targetTouches[0].clientX;
-    };
-
-    const handleTouchEnd = () => {
-        if (touchStartX.current === 0) return;
-
-        const deltaX = touchMoveX.current - touchStartX.current;
-        const threshold = 50; // Swipe threshold in pixels
-
-        if (deltaX > threshold && activeTabIndex > 0) {
-            setActiveTab(TABS[activeTabIndex - 1]);
-        } else if (deltaX < -threshold && activeTabIndex < TABS.length - 1) {
-            setActiveTab(TABS[activeTabIndex + 1]);
-        }
-        
-        touchStartX.current = 0;
-        touchMoveX.current = 0;
-    };
     
     if (activeQuiz) {
         return (
@@ -208,57 +154,106 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
             />
         );
     }
-
+    
     if (viewingYear !== null) {
+        const handleBackToSubject = () => {
+            setViewingYear(null);
+        }
+
+        let url = '';
+        const hasSol = hasCorrection(viewingYear);
+        if (topicView === 'topic') {
+            if (subject.name === 'المحاسبة') url = accountingTopics[viewingYear]?.exam || '';
+            if (subject.name === 'الإقتصاد') url = economicsTopics[viewingYear]?.exam || '';
+            if (subject.name === 'القانون') url = lawTopics[viewingYear]?.exam || '';
+        } else {
+            if (subject.name === 'المحاسبة') url = accountingTopics[viewingYear]?.solution || '';
+            if (subject.name === 'الإقتصاد') url = economicsTopics[viewingYear]?.solution || '';
+            if (subject.name === 'القانون') url = lawTopics[viewingYear]?.solution || '';
+        }
+
         return (
-            <div className="bg-gray-50 dark:bg-gray-900 h-full flex flex-col relative">
-                <header className="flex items-center gap-4 p-4 pb-4 border-b dark:border-gray-700 sticky top-0 bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm z-10">
-                    <button onClick={() => setViewingYear(null)} className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" aria-label="Go back">
-                        <BackArrowIcon className="w-6 h-6 text-gray-700 dark:text-gray-300" />
-                    </button>
-                    <div>
-                        <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">{subject.name}</h2>
-                        <p className="text-gray-500 dark:text-gray-400">بكالوريا {viewingYear}</p>
-                    </div>
-                </header>
+            <>
+                <Header
+                    onLeftButtonClick={handleBackToSubject}
+                    isHomePage={false}
+                    onThemeToggle={onThemeToggle}
+                    theme={theme}
+                />
+                <div className="p-4 flex flex-col h-full animate-fade-in">
+                    <nav aria-label="breadcrumb" className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                        <ol className="list-none p-0 inline-flex">
+                            <li className="flex items-center">
+                                <span className="cursor-default">الرئيسية</span>
+                            </li>
+                            <li className="flex items-center">
+                                <span className="mx-2">&gt;</span>
+                            </li>
+                            <li className="flex items-center">
+                                <button onClick={handleBackToSubject} className="hover:underline">{subject.name}</button>
+                            </li>
+                            <li className="flex items-center">
+                                <span className="mx-2">&gt;</span>
+                            </li>
+                            <li className="flex items-center" aria-current="page">
+                                <span className="font-semibold text-gray-700 dark:text-gray-300">{viewingYear}</span>
+                            </li>
+                        </ol>
+                    </nav>
 
-                {hasCorrection(viewingYear) && (
-                     <div className="px-4 py-2 sticky top-[73px] bg-gray-50/80 dark:bg-gray-900/80 backdrop-blur-sm z-10 border-b border-gray-200 dark:border-gray-700">
-                        <div className="relative bg-gray-200 dark:bg-gray-700/50 p-1 rounded-full flex w-full max-w-xs mx-auto">
-                             <div
-                                className="absolute top-1 bottom-1 right-1 w-[calc(50%-4px)] bg-white dark:bg-blue-600 rounded-full shadow-md transition-transform duration-300 ease-in-out"
-                                style={{
-                                    transform: topicView === 'topic' ? 'translateX(0%)' : 'translateX(-100%)',
-                                }}
-                            />
-                            <button 
-                                onClick={() => setTopicView('topic')}
-                                className={`relative z-10 w-1/2 py-2.5 text-center rounded-full font-bold transition-colors duration-300 ${
-                                    topicView === 'topic' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                                }`}
-                                aria-current={topicView === 'topic'}
-                            >
-                                المواضيع
-                            </button>
-                            <button
-                                onClick={() => setTopicView('correction')}
-                                className={`relative z-10 w-1/2 py-2.5 text-center rounded-full font-bold transition-colors duration-300 ${
-                                    topicView === 'correction' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-gray-300'
-                                }`}
-                                aria-current={topicView === 'correction'}
-                            >
-                                الحلول
-                            </button>
+                    <h2 className="text-3xl font-extrabold text-gray-800 dark:text-gray-200 mb-1">{subject.name} - <span className="text-green-500">بكالوريا {viewingYear}</span></h2>
+                    <p className="text-gray-500 dark:text-gray-400 mt-1 mb-6">مواضيع وحلول بكالوريا {viewingYear} لمادة {subject.name}</p>
+
+                    {hasSol && (
+                        <div className="mb-6">
+                            <div className="relative bg-gray-200 dark:bg-slate-800 p-1 rounded-full flex w-full max-w-xs mx-auto shadow-inner">
+                                <div
+                                    className="absolute top-1 bottom-1 right-1 w-[calc(50%-4px)] bg-white dark:bg-blue-600 rounded-full shadow-md transition-transform duration-300 ease-in-out"
+                                    style={{
+                                        transform: topicView === 'topic' ? 'translateX(0%)' : 'translateX(-100%)',
+                                    }}
+                                />
+                                <button 
+                                    onClick={() => setTopicView('topic')}
+                                    className={`relative z-10 w-1/2 py-2 text-center rounded-full font-bold transition-colors duration-300 ${
+                                        topicView === 'topic' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-slate-300'
+                                    }`}
+                                    aria-current={topicView === 'topic'}
+                                >
+                                    المواضيع
+                                </button>
+                                <button
+                                    onClick={() => setTopicView('correction')}
+                                    className={`relative z-10 w-1/2 py-2 text-center rounded-full font-bold transition-colors duration-300 ${
+                                        topicView === 'correction' ? 'text-blue-700 dark:text-white' : 'text-gray-600 dark:text-slate-300'
+                                    }`}
+                                    aria-current={topicView === 'correction'}
+                                >
+                                    الحلول
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                )}
-
-                <div className="flex-grow overflow-y-auto">
-                    <div key={topicView} className="animate-fade-in">
-                        {topicView === 'topic' ? renderLessonContent() : renderCorrectionContent()}
-                    </div>
+                    )}
+                    
+                    <a 
+                        href={url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="group bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-lg dark:hover:shadow-gray-700/50 transition-all duration-300 p-5 flex items-center gap-5 cursor-pointer hover:-translate-y-1 hover:ring-2 hover:ring-blue-500/50"
+                    >
+                        <div className="w-16 h-16 rounded-xl flex items-center justify-center bg-blue-100 dark:bg-blue-900/50">
+                            <DocumentIcon className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                        </div>
+                        <div className="flex-1">
+                            <h3 className="text-xl font-bold text-gray-800 dark:text-gray-200">
+                                {topicView === 'topic' ? 'موضوع' : 'حل'} بكالوريا {viewingYear}
+                            </h3>
+                            <p className="text-gray-500 dark:text-gray-400 mt-1 text-sm">PDF • 2-3 MB</p>
+                        </div>
+                        <ExternalLinkIcon className="w-6 h-6 text-gray-400 dark:text-gray-500 transition-transform group-hover:text-blue-500" />
+                    </a>
                 </div>
-            </div>
+            </>
         );
     }
 
@@ -267,10 +262,12 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
     const viewedLessons = progress.viewedLessons?.[subject.name] || [];
     const viewedAvailableLessonsCount = viewedLessons.filter(year => availableYears.includes(year)).length;
     const progressPercentage = totalLessonsCount > 0 ? (viewedAvailableLessonsCount / totalLessonsCount) * 100 : 0;
+    
+    const iconToRender = theme === 'dark' && subject.iconDark ? subject.iconDark : subject.icon;
 
 
     return (
-        <div className="p-4 flex flex-col h-full" dir="rtl">
+        <div className="p-4 flex flex-col h-full">
             <nav aria-label="breadcrumb" className="text-sm text-gray-500 dark:text-gray-400 mb-4">
                 <ol className="list-none p-0 inline-flex">
                     <li className="flex items-center">
@@ -289,7 +286,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                 <div className="relative w-36 h-36 flex-shrink-0">
                     <div className={`animate-subtle-glow absolute -inset-4 ${subject.color} rounded-full blur-3xl opacity-70`}></div>
                     <div className={`relative w-full h-full rounded-[2.25rem] flex items-center justify-center bg-white/60 dark:bg-gray-900/60 backdrop-blur-3xl border border-white/70 dark:border-gray-500/50 shadow-2xl`}>
-                        {React.cloneElement(subject.icon, { className: 'w-24 h-24 object-contain' })}
+                        {React.cloneElement(iconToRender, { className: 'w-24 h-24 object-contain' })}
                     </div>
                 </div>
                 <div>
@@ -319,9 +316,6 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
 
             <div 
                 className="bg-gray-100 dark:bg-gray-800 rounded-xl flex relative mb-6 shadow-inner"
-                onTouchStart={handleTouchStart}
-                onTouchMove={handleTouchMove}
-                onTouchEnd={handleTouchEnd}
             >
                 <div
                     className="absolute top-0 right-0 bottom-0 w-1/3 bg-white dark:bg-gray-700 shadow-md rounded-xl transition-transform duration-300 ease-in-out p-1"
@@ -347,34 +341,29 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                 ))}
             </div>
             
-            <div 
-                className="flex-grow w-full overflow-hidden min-h-0" 
-            >
-                <div
-                    className="flex h-full transition-transform duration-300 ease-in-out"
-                    style={{ transform: `translateX(${activeTabIndex * 100}%)` }}
-                >
-                    <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+             <div className="flex-grow relative min-h-0">
+                {activeTab === 'topics' && (
+                    <div className="animate-fade-in h-full overflow-y-auto">
                         <section className="grid grid-cols-2 gap-4">
                             {years.map(year => {
                                 const isAvailable = hasContent(year);
                                 const isViewed = isLessonViewed(subject.name, year);
                                 const isCorrectionAvailable = hasCorrection(year);
-                                const topBarColorClass = isViewed 
-                                    ? 'bg-green-400 dark:bg-green-600' 
-                                    : isAvailable 
-                                    ? 'bg-blue-300 dark:bg-blue-700' 
+                                const topBarColorClass = isViewed
+                                    ? 'bg-green-400 dark:bg-green-600'
+                                    : isAvailable
+                                    ? 'bg-blue-300 dark:bg-blue-700'
                                     : 'bg-gray-300 dark:bg-gray-600';
 
                                 return (
-                                    <article 
-                                        key={year} 
-                                        onClick={() => handleYearClick(year)} 
+                                    <article
+                                        key={year}
+                                        onClick={() => handleYearClick(year)}
                                         className={`
                                             bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-200 dark:border-gray-700 text-center shadow-sm 
                                             transition-all relative overflow-hidden
-                                            ${isAvailable 
-                                                ? 'hover:shadow-md dark:hover:shadow-gray-700/50 cursor-pointer hover:-translate-y-1 hover:ring-2 hover:ring-blue-500/50' 
+                                            ${isAvailable
+                                                ? 'hover:shadow-md dark:hover:shadow-gray-700/50 cursor-pointer hover:-translate-y-1 hover:ring-2 hover:ring-blue-500/50'
                                                 : 'opacity-50 cursor-not-allowed'
                                             }
                                         `}
@@ -389,7 +378,10 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                             })}
                         </section>
                     </div>
-                    <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+                )}
+
+                {activeTab === 'lessons' && (
+                     <div className="animate-fade-in h-full overflow-y-auto">
                         {subject.name === 'الإقتصاد' ? (
                             <EconomicsLessons />
                         ) : (
@@ -402,7 +394,10 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                             </div>
                         )}
                     </div>
-                    <div className="w-full flex-shrink-0 h-full overflow-y-auto">
+                )}
+
+                {activeTab === 'quizzes' && (
+                    <div className="animate-fade-in h-full overflow-y-auto">
                         {subjectQuizzes.length > 0 ? (
                              <section className="space-y-4">
                                 {subjectQuizzes.map(quiz => {
@@ -415,8 +410,8 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                                     const progressColor = percentage > 80 ? 'text-green-500' : percentage >= 50 ? 'text-blue-500' : 'text-orange-500';
 
                                     return (
-                                        <article 
-                                            key={quiz.id} 
+                                        <article
+                                            key={quiz.id}
                                             onClick={() => setActiveQuiz(quiz)}
                                             className="group bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm transition-all duration-300 p-5 hover:shadow-lg hover:-translate-y-1 cursor-pointer flex flex-col"
                                         >
@@ -495,7 +490,7 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
                             </div>
                         )}
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );

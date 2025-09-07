@@ -15,7 +15,7 @@ const streams: Stream[] = [
   {
     name: 'شعبة تسيير واقتصاد',
     subjects: [
-      { name: 'التسيير المحاسبي و المالي', coeff: 6 },
+      { name: 'المحاسبة', coeff: 6 },
       { name: 'الاقتصاد والمناجمنت', coeff: 5 },
       { name: 'الرياضيات', coeff: 5 },
       { name: 'التاريخ والجغرافيا', coeff: 4 },
@@ -77,7 +77,7 @@ const streams: Stream[] = [
 ];
 
 const subjectColors: Record<string, string> = {
-    'التسيير المحاسبي و المالي': 'bg-gray-500',
+    'المحاسبة': 'bg-gray-500',
     'الاقتصاد والمناجمنت': 'bg-green-500',
     'الرياضيات': 'bg-red-500',
     'التاريخ والجغرافيا': 'bg-orange-500',

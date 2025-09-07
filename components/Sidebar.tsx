@@ -9,11 +9,16 @@ interface SidebarProps {
   selectedSubject: Subject | null;
   onSubjectSelect: (subject: Subject) => void;
   onHomeSelect: () => void;
+  theme: 'light' | 'dark';
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, subjects, selectedSubject, onSubjectSelect, onHomeSelect }) => {
+const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, subjects, selectedSubject, onSubjectSelect, onHomeSelect, theme }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const isHomeActive = selectedSubject === null;
+
+  const filteredSubjects = subjects.filter(subject =>
+    subject.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
     <>
@@ -26,7 +31,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, subjects, selectedSu
         id="sidebar"
         role="navigation"
         aria-label="Quick navigation"
-        className={`fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-800 shadow-xl z-50 transform transition-transform duration-300 ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-800 shadow-xl z-50 transform transition-transform duration-300 flex flex-col ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}
       >
         <div className="p-4 border-b dark:border-gray-700 flex justify-between items-center">
           <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">التنقل السريع</h2>
@@ -46,7 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, subjects, selectedSu
             />
           </div>
         </div>
-        <nav className="p-2">
+        <nav className="p-2 flex-grow overflow-y-auto">
           <ul>
             <li>
                 <a
@@ -61,6 +66,26 @@ const Sidebar: React.FC<SidebarProps> = ({ isOpen, onClose, subjects, selectedSu
                     <span className="font-semibold">الصفحة الرئيسية</span>
                 </a>
             </li>
+            <li className="px-3 pt-4 pb-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">المواد</li>
+            {filteredSubjects.map(subject => {
+                const isActive = selectedSubject?.name === subject.name;
+                const iconToRender = theme === 'dark' && subject.iconDark ? subject.iconDark : subject.icon;
+                return (
+                    <li key={subject.name}>
+                        <a
+                            href={`#${encodeURIComponent(subject.name)}`}
+                            onClick={(e) => {
+                                e.preventDefault();
+                                onSubjectSelect(subject);
+                            }}
+                            className={`flex items-center gap-3 p-3 rounded-lg text-gray-700 dark:text-gray-300 border-r-4 transition-colors ${isActive ? 'bg-blue-50 dark:bg-gray-700/50 font-bold border-blue-500' : 'border-transparent hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                        >
+                            {React.cloneElement(iconToRender, { className: 'w-6 h-6 object-contain' })}
+                            <span className="font-semibold">{subject.name}</span>
+                        </a>
+                    </li>
+                );
+            })}
           </ul>
         </nav>
       </div>
