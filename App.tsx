@@ -12,13 +12,15 @@ import DailyGoal from './components/DailyGoal';
 import StudyPlanGenerator from './components/StudyPlanGenerator';
 import QuizHub from './components/QuizHub';
 import Onboarding from './components/Onboarding'; // Import Onboarding
+import StudyBuddy from './components/StudyBuddy';
 import type { Subject, NavItem } from './types';
 import { 
     CalculatorIcon,
     QuestionMarkCircleIcon,
     LightBulbIcon,
     CalendarIcon,
-    HomeIcon
+    HomeIcon,
+    RobotIcon
 } from './components/icons';
 import SubjectDetailPage from './components/SubjectDetailPage';
 
@@ -61,6 +63,7 @@ const App: React.FC = () => {
     const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null);
     const [isViewingLesson, setIsViewingLesson] = useState(false);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isStudyBuddyOpen, setIsStudyBuddyOpen] = useState(false);
     const [showOnboarding, setShowOnboarding] = useState(false); // New onboarding state
     const [theme, setTheme] = useState<'light' | 'dark'>(() => {
         if (typeof window !== 'undefined' && localStorage.getItem('theme')) {
@@ -198,6 +201,7 @@ const App: React.FC = () => {
     return (
         <div className="max-w-md mx-auto min-h-screen font-sans flex flex-col shadow-2xl">
             {showOnboarding && <Onboarding onComplete={handleOnboardingComplete} />}
+            {isStudyBuddyOpen && <StudyBuddy onClose={() => setIsStudyBuddyOpen(false)} />}
             <Sidebar 
                 isOpen={isSidebarOpen}
                 onClose={() => setIsSidebarOpen(false)}
@@ -226,8 +230,17 @@ const App: React.FC = () => {
                     {renderPageContent()}
                 </div>
             </main>
-            {!isViewingLesson && (
-                <BottomNav items={navItems} activeItem={activeNav} onItemClick={handleNavItemClick} />
+            {!isViewingLesson && !showOnboarding && (
+                <>
+                    <button
+                        onClick={() => setIsStudyBuddyOpen(true)}
+                        className="fixed bottom-24 left-4 z-30 w-16 h-16 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg hover:shadow-xl transform transition-all hover:scale-110 flex items-center justify-center animate-pulse-glow"
+                        aria-label="افتح رفيق النجاح"
+                    >
+                        <RobotIcon className="w-8 h-8" />
+                    </button>
+                    <BottomNav items={navItems} activeItem={activeNav} onItemClick={handleNavItemClick} />
+                </>
             )}
         </div>
     );

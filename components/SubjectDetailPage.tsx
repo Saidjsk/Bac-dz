@@ -6,6 +6,7 @@ import { quizzesBySubject } from '../data/quizzes';
 import { accountingTopics } from '../data/accountingTopics';
 import { economicsTopics } from '../data/economicsTopics';
 import { lawTopics } from '../data/lawTopics';
+import { mathTopics } from '../data/mathTopics';
 import EconomicsLessons from './EconomicsLessons';
 import { Header } from './Header';
 import PDFDisplay from './PDFDisplay';
@@ -124,6 +125,9 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         if (subject.name === 'القانون') {
             return !!lawTopics[year]?.exam;
         }
+        if (subject.name === 'الرياضيات') {
+            return !!mathTopics[year]?.exam;
+        }
         return false;
     }
     
@@ -136,6 +140,9 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
         }
         if (subject.name === 'القانون') {
             return !!lawTopics[year]?.solution;
+        }
+        if (subject.name === 'الرياضيات') {
+            return !!mathTopics[year]?.solution;
         }
         return false;
     };
@@ -170,10 +177,12 @@ const SubjectDetailPage: React.FC<SubjectDetailPageProps> = ({ subject, onViewLe
             if (subject.name === 'المحاسبة') url = accountingTopics[viewingYear]?.exam || '';
             if (subject.name === 'الإقتصاد') url = economicsTopics[viewingYear]?.exam || '';
             if (subject.name === 'القانون') url = lawTopics[viewingYear]?.exam || '';
+            if (subject.name === 'الرياضيات') url = mathTopics[viewingYear]?.exam || '';
         } else {
             if (subject.name === 'المحاسبة') url = accountingTopics[viewingYear]?.solution || '';
             if (subject.name === 'الإقتصاد') url = economicsTopics[viewingYear]?.solution || '';
             if (subject.name === 'القانون') url = lawTopics[viewingYear]?.solution || '';
+            if (subject.name === 'الرياضيات') url = mathTopics[viewingYear]?.solution || '';
         }
         const title = `${topicView === 'topic' ? 'موضوع' : 'حل'} ${subject.name} - ${viewingYear}`;
         
